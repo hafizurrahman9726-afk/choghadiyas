@@ -35,7 +35,57 @@ try {
 <main id="main-content" class="homepage-main">
 
   <!-- ============================================================
-       1. TOP AUTOMATIC IMAGE SLIDER (Placed Immediately Below Header)
+       1. HERO SECTION (Immediately Below Header - Prompt Adda Style)
+       Centered Composition, White Background, Single Homepage H1
+       ============================================================ -->
+  <section class="hero-section" aria-label="मुख्य परिचय एवं खोज">
+    <div class="container">
+      <div class="hero-content">
+        <!-- Small label badge -->
+        <div class="hero-badge">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"/>
+            <path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/>
+          </svg>
+          <span>धार्मिक एवं वैदिक पंचांग मार्गदर्शिका</span>
+        </div>
+
+        <!-- Main H1 (Single H1 on Homepage) -->
+        <h1 class="hero-title">
+          चौघड़िया, पंचांग, व्रत-त्योहार और <span class="hero-title-accent">पूजा विधि</span> की जानकारी
+        </h1>
+
+        <!-- Description -->
+        <p class="hero-subtitle">
+          Choghadiyas.in पर जानें चौघड़िया और पंचांग से जुड़ी जानकारी, व्रत-त्योहारों की तिथियाँ, शुभ मुहूर्त, पूजा विधियाँ और आवश्यक सामग्री। हमारे लेख धार्मिक परंपराओं और उपयोगी जानकारियों को सरल हिंदी में समझाते हैं।
+        </p>
+
+        <!-- Prominent Rounded Search Bar with real search functionality -->
+        <div class="search-bar-wrap">
+          <form action="<?php echo $base_url; ?>/search" method="GET" class="search-bar-form" role="search" aria-label="वेबसाइट पर खोजें">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:0.6rem; flex-shrink:0;" aria-hidden="true">
+              <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
+            </svg>
+            <input 
+              type="text" 
+              name="q" 
+              class="search-bar-input" 
+              placeholder="लेख, व्रत या पूजा विधि खोजें..." 
+              required
+              aria-label="खोजें"
+              autocomplete="off"
+            >
+            <button type="submit" class="search-submit-btn" aria-label="खोज शुरू करें">
+              Search →
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       2. TOP AUTOMATIC IMAGE SLIDER (Placed Immediately Below Hero)
        Continuous Smooth Horizontal Marquee (Matching Prompt Adda Reference)
        ============================================================ -->
   <section class="top-slider-section" aria-label="प्रमुख एवं उपयोगी लेख">

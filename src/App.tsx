@@ -143,8 +143,16 @@ export default function App() {
         />
       ) : (
         /* HOMEPAGE VIEW (Matching Screenshots 1, 2, 3) */
-        <main className="flex-1">
-          {/* TOP AUTOMATIC CONTINUOUS IMAGE SLIDER (Placed Immediately Below Header) */}
+        <main className="flex-1 bg-white">
+          {/* 1. HERO SECTION (Placed Immediately Below Header - Prompt Adda Style) */}
+          <Hero
+            searchQuery={searchQuery}
+            onSearchChange={setSearchQuery}
+            onSearchSubmit={handleHeroSearchSubmit}
+            onClearSearch={handleClearSearch}
+          />
+
+          {/* 2. TOP AUTOMATIC CONTINUOUS IMAGE SLIDER (Placed Immediately Below Hero) */}
           <ImageSlider
             articles={ARTICLES_DATA}
             onSelectArticle={handleSelectArticle}

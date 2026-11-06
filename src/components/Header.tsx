@@ -39,8 +39,8 @@ export const Header: React.FC<HeaderProps> = ({ activeNav, onNavigate, onOpenSea
           </div>
           <div>
             <div className="flex items-center">
-              <span className="text-xl sm:text-2xl font-black text-[#0A1629] tracking-tight">Choghadiya</span>
-              <span className="text-xl sm:text-2xl font-black text-[#FF7000] tracking-tight">s.in</span>
+              <span className="text-xl sm:text-2xl font-black text-[#0A1629] tracking-tight">Choghadiyas</span>
+              <span className="text-xl sm:text-2xl font-black text-[#FF7000] tracking-tight">.in</span>
             </div>
             <p className="text-[10px] font-medium text-[#64748B] tracking-wider uppercase -mt-0.5">
               वैदिक चौघड़िया एवं पंचांग

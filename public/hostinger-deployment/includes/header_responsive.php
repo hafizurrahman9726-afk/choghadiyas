@@ -38,6 +38,8 @@ $categories = db_fetch_all("SELECT * FROM categories WHERE status = 'active' ORD
     $is_staging_env = (strpos($_SERVER['REQUEST_URI'] ?? '', 'staging') !== false) || (strpos($_SERVER['SCRIPT_NAME'] ?? '', 'staging') !== false);
     if ($is_staging_env): ?>
     <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+    <?php else: ?>
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     <?php endif; ?>
     
     <!-- Open Graph Meta Tags -->
@@ -166,7 +168,7 @@ $categories = db_fetch_all("SELECT * FROM categories WHERE status = 'active' ORD
                     </svg>
                 </div>
                 <div>
-                    <div class="brand-title">Choghadiya<span>s.in</span></div>
+                    <div class="brand-title">Choghadiyas<span>.in</span></div>
                     <div class="brand-subtitle">वैदिक चौघड़िया एवं पंचांग</div>
                 </div>
             </a>
@@ -221,7 +223,7 @@ $categories = db_fetch_all("SELECT * FROM categories WHERE status = 'active' ORD
     <div class="mobile-drawer-overlay" id="mobileDrawerOverlay" onclick="window.toggleMobileDrawer(false);"></div>
     <aside class="mobile-drawer" id="mobileDrawer" aria-label="मोबाइल नेविगेशन">
         <div class="mobile-drawer-header">
-            <div class="brand-title" style="font-size:1.15rem;">Choghadiya<span style="color:#FF7000;">s.in</span></div>
+            <div class="brand-title" style="font-size:1.15rem;">Choghadiyas<span style="color:#FF7000;">.in</span></div>
             <button class="drawer-close-btn" onclick="window.toggleMobileDrawer(false);" aria-label="मेनू बंद करें">✕</button>
         </div>
         <div class="mobile-drawer-search">

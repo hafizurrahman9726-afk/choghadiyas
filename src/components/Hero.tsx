@@ -15,28 +15,35 @@ export const Hero: React.FC<HeroProps> = ({
   onClearSearch,
 }) => {
   return (
-    <section className="pt-10 pb-6 px-4 sm:px-6 text-center max-w-4xl mx-auto">
-      {/* Main Heading (Exact Screenshot 1 typography hierarchy) */}
-      <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#0A1629] tracking-tight leading-tight md:leading-snug">
-        चौघड़िया, पंचांग और{' '}
-        <span className="text-[#FF7000] block sm:inline mt-1 sm:mt-0">
-          शुभ मुहूर्त की जानकारी
-        </span>
+    <section className="pt-8 sm:pt-12 pb-6 px-4 sm:px-6 text-center max-w-4xl mx-auto bg-white" aria-label="मुख्य परिचय एवं खोज">
+      {/* Small label badge (Prompt Adda reference style) */}
+      <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-orange-50 border border-orange-200 text-xs font-bold text-[#EA580C] mb-4">
+        <span>धार्मिक एवं वैदिक पंचांग मार्गदर्शिका</span>
+      </div>
+
+      {/* Main H1 (Single H1 on Homepage) */}
+      <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-[#0A1629] tracking-tight leading-tight md:leading-snug">
+        चौघड़िया, पंचांग, व्रत-त्योहार और{' '}
+        <span className="text-[#FF7000] inline-block">
+          पूजा विधि
+        </span>{' '}
+        की जानकारी
       </h1>
 
       {/* Description */}
-      <p className="mt-4 text-sm sm:text-base text-[#64748B] max-w-2xl mx-auto leading-relaxed">
-        Welcome to <strong className="text-[#0A1629] font-semibold">Choghadiyas.in</strong> – भारत का #1 मंच जहां आप आज का चौघड़िया, दैनिक पंचांग, राहुकाल, शुभ मुहूर्त, हिंदू व्रत-त्योहार और वैदिक पूजा विधि की 100% प्रामाणिक और सटीक जानकारी प्राप्त कर सकते हैं।
+      <p className="mt-3.5 text-xs sm:text-sm md:text-base text-[#64748B] max-w-2xl mx-auto leading-relaxed">
+        Choghadiyas.in पर जानें चौघड़िया और पंचांग से जुड़ी जानकारी, व्रत-त्योहारों की तिथियाँ, शुभ मुहूर्त, पूजा विधियाँ और आवश्यक सामग्री। हमारे लेख धार्मिक परंपराओं और उपयोगी जानकारियों को सरल हिंदी में समझाते हैं।
       </p>
 
-      {/* Recreated Search Bar (Exact Screenshot 1 Style) */}
-      <div className="mt-7 max-w-2xl mx-auto">
+      {/* Recreated Search Bar (Prompt Adda reference style) */}
+      <div className="mt-6 max-w-2xl mx-auto">
         <form
           onSubmit={onSearchSubmit}
           className="relative flex items-center bg-white rounded-full border border-[#DFE6EF] shadow-[0_4px_20px_rgba(10,22,41,0.06)] hover:border-orange-300 focus-within:border-[#FF7000] focus-within:ring-2 focus-within:ring-orange-100 p-1.5 transition-all"
+          role="search"
         >
-          {/* Orange search icon */}
-          <div className="pl-4 pr-2 text-[#FF7000] flex items-center pointer-events-none">
+          {/* Search icon */}
+          <div className="pl-3.5 pr-2 text-[#64748B] flex items-center pointer-events-none">
             <Search className="w-5 h-5" />
           </div>
 
@@ -45,8 +52,9 @@ export const Hero: React.FC<HeroProps> = ({
             type="text"
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
-            placeholder="चौघड़िया, पंचांग, व्रत, त्योहार और शुभ मुहूर्त खोजें..."
-            className="w-full py-2.5 text-xs sm:text-sm text-[#0A1629] placeholder-[#94A3B8] bg-transparent outline-none font-medium"
+            placeholder="लेख, व्रत या पूजा विधि खोजें..."
+            className="w-full py-2 text-xs sm:text-sm text-[#0A1629] placeholder-[#94A3B8] bg-transparent outline-none font-medium"
+            aria-label="लेख, व्रत या पूजा विधि खोजें"
           />
 
           {/* Clear button if text entered */}
@@ -64,7 +72,7 @@ export const Hero: React.FC<HeroProps> = ({
           {/* Orange Search button with arrow */}
           <button
             type="submit"
-            className="bg-[#FF7000] hover:bg-[#E65100] text-white px-5 sm:px-6 py-2.5 rounded-full text-xs sm:text-sm font-semibold flex items-center gap-1.5 shrink-0 transition-transform active:scale-95 shadow-sm shadow-orange-500/20 cursor-pointer"
+            className="bg-[#FF7000] hover:bg-[#EA580C] text-white px-5 sm:px-6 py-2.5 rounded-full text-xs sm:text-sm font-semibold flex items-center gap-1.5 shrink-0 transition-transform active:scale-95 shadow-sm shadow-orange-500/20 cursor-pointer"
           >
             <span>Search</span>
             <ArrowRight className="w-4 h-4" />

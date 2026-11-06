@@ -20,11 +20,22 @@ export const ImageSlider: React.FC<ImageSliderProps> = ({ articles, onSelectArti
       {/* Marquee Track */}
       <div className="flex animate-marquee gap-3 sm:gap-4 px-2 sm:px-4 items-center">
         {duplicatedItems.map((article, idx) => {
+          const isClone = idx >= sliderItems.length;
           const isPriority = idx < 4;
           return (
             <div
               key={`${article.id}-${idx}`}
               onClick={() => onSelectArticle(article)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  onSelectArticle(article);
+                }
+              }}
+              role="button"
+              tabIndex={isClone ? -1 : 0}
+              aria-hidden={isClone ? 'true' : undefined}
+              aria-label={article.title}
               className="w-36 sm:w-44 md:w-48 h-52 sm:h-64 md:h-72 shrink-0 rounded-2xl overflow-hidden relative group cursor-pointer shadow-[0_4px_16px_rgba(10,22,41,0.08)] hover:shadow-[0_12px_28px_rgba(10,22,41,0.16)] transition-all duration-300 border border-slate-200/80 bg-slate-50 transform hover:-translate-y-1"
             >
               <img

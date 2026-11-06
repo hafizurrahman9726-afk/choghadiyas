@@ -56,7 +56,7 @@ export const SingleArticlePage: React.FC<SingleArticlePageProps> = ({
   };
 
   return (
-    <div className="bg-[#F7F9FC] py-8 sm:py-12">
+    <div className="bg-white min-h-screen py-8 sm:py-12">
       <div className="max-w-[1240px] mx-auto px-4 sm:px-6">
         {/* Breadcrumb & Back button */}
         <div className="flex items-center justify-between mb-6 text-xs text-[#64748B]">

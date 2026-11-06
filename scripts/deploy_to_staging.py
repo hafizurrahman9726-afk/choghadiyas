@@ -32,6 +32,16 @@ FILES_TO_DEPLOY = [
         "local": "public/hostinger-deployment/assets/css/choghadiya-theme.css",
         "remote_dir": "staging-test/assets/css",
         "remote_filename": "choghadiya-theme.css"
+    },
+    {
+        "local": "public/hostinger-deployment/includes/header.php",
+        "remote_dir": "staging-test/includes",
+        "remote_filename": "header.php"
+    },
+    {
+        "local": "public/hostinger-deployment/includes/header_responsive.php",
+        "remote_dir": "staging-test/includes",
+        "remote_filename": "header_responsive.php"
     }
 ]
 
