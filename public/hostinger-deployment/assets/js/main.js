@@ -1,12 +1,12 @@
 // Choghadiyas.in — Main Client-side Script
-// Powers Smooth Marquee Slider, 30-Article Grid with Live Category Filtering & Pagination, Search & Mobile Drawer
+// Powers Smooth Automatic Image Slider, 30-Article Grid with Pagination, 7 FAQ Accordions, Search & Mobile Drawer
 (function () {
   'use strict';
 
   var articles = window.CHOGHADIYA_ARTICLES || [];
   var currentCategory = 'all';
   var currentPage = 1;
-  var articlesPerPage = 30; // 30 articles per page matching 75 articles catalog
+  var articlesPerPage = 30;
 
   // --- 1. MOBILE DRAWER NAVIGATION ---
   window.toggleMobileDrawer = function (forceState) {
@@ -31,12 +31,12 @@
     }
   };
 
-  // --- 2. CONTINUOUS MARQUEE SLIDER TOUCH & HOVER PAUSE ---
+  // --- 2. AUTOMATIC IMAGE SLIDER CONTROLS (Pause on Hover & Touch) ---
   function initSliderControls() {
     var track = document.getElementById('slider-track');
     if (!track) return;
 
-    // Mobile touch pause
+    // Mobile touch interaction
     track.addEventListener('touchstart', function () {
       track.classList.add('is-paused');
     }, { passive: true });
@@ -50,7 +50,41 @@
     }, { passive: true });
   }
 
-  // --- 3. ARTICLES FILTERING & NUMBERED PAGINATION ---
+  // --- 3. 7 FAQ ACCORDION EXPAND / COLLAPSE FUNCTIONALITY ---
+  window.toggleFaq = function (btn) {
+    if (!btn) return;
+    var item = btn.closest('.faq-item');
+    if (!item) return;
+
+    var isCurrentlyActive = item.classList.contains('active');
+    var allItems = document.querySelectorAll('.faq-item');
+
+    // Close all other accordion items
+    allItems.forEach(function (el) {
+      if (el !== item) {
+        el.classList.remove('active');
+        var b = el.querySelector('.faq-question');
+        if (b) b.setAttribute('aria-expanded', 'false');
+        var a = el.querySelector('.faq-answer');
+        if (a) a.setAttribute('aria-hidden', 'true');
+      }
+    });
+
+    // Toggle clicked item
+    if (isCurrentlyActive) {
+      item.classList.remove('active');
+      btn.setAttribute('aria-expanded', 'false');
+      var ans = item.querySelector('.faq-answer');
+      if (ans) ans.setAttribute('aria-hidden', 'true');
+    } else {
+      item.classList.add('active');
+      btn.setAttribute('aria-expanded', 'true');
+      var ans = item.querySelector('.faq-answer');
+      if (ans) ans.setAttribute('aria-hidden', 'false');
+    }
+  };
+
+  // --- 4. ARTICLES FILTERING & NUMBERED PAGINATION ---
   function getFilteredArticles() {
     if (currentCategory === 'all') return articles;
     return articles.filter(function (a) {
@@ -110,19 +144,19 @@
 
     // Previous Button
     if (currentPage > 1) {
-      html += '<button class="page-btn prev" onclick="window.setPage(' + (currentPage - 1) + ')" aria-label="पिछला पृष्ठ">← पिछला</button>';
+      html += '<button type="button" class="page-btn prev" onclick="window.setPage(' + (currentPage - 1) + ')" aria-label="पिछला पृष्ठ">← पिछला</button>';
     }
 
     // Numbered Buttons
     for (var i = 1; i <= totalPages; i++) {
       var activeClass = i === currentPage ? 'active' : '';
       var ariaSelected = i === currentPage ? 'aria-current="page"' : '';
-      html += '<button class="page-btn ' + activeClass + '" onclick="window.setPage(' + i + ')" ' + ariaSelected + ' aria-label="पृष्ठ ' + i + '">' + i + '</button>';
+      html += '<button type="button" class="page-btn ' + activeClass + '" onclick="window.setPage(' + i + ')" ' + ariaSelected + ' aria-label="पृष्ठ ' + i + '">' + i + '</button>';
     }
 
     // Next Button
     if (currentPage < totalPages) {
-      html += '<button class="page-btn next" onclick="window.setPage(' + (currentPage + 1) + ')" aria-label="अगला पृष्ठ">अगला →</button>';
+      html += '<button type="button" class="page-btn next" onclick="window.setPage(' + (currentPage + 1) + ')" aria-label="अगला पृष्ठ">अगला →</button>';
     }
 
     wrap.innerHTML = html;
@@ -155,7 +189,7 @@
     }
   };
 
-  // --- 4. ACCESSIBLE SEARCH MODAL & FORM ---
+  // --- 5. SEARCH MODAL ---
   window.openSearchModal = function () {
     var m = document.getElementById('searchModal');
     if (!m) return;
@@ -231,13 +265,12 @@
     container.innerHTML = html;
   }
 
-  // --- 5. INITIALIZATION ---
+  // --- 6. INITIALIZATION ---
   document.addEventListener('DOMContentLoaded', function () {
     initSliderControls();
     renderArticlesGrid();
   });
 
-  // Global escape key to close search modal
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') {
       window.closeSearchModal();

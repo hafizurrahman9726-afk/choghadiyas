@@ -7,44 +7,47 @@ interface ImageSliderProps {
 }
 
 export const ImageSlider: React.FC<ImageSliderProps> = ({ articles, onSelectArticle }) => {
-  // Take top 8-10 featured items and duplicate for infinite continuous loop
-  const sliderItems = articles.slice(0, 10);
+  // Top 12 real published articles duplicated for continuous 0-jump seamless marquee
+  const sliderItems = articles.slice(0, 12);
   const duplicatedItems = [...sliderItems, ...sliderItems];
 
   return (
-    <section className="py-6 overflow-hidden relative select-none">
-      {/* Subtle fade edges for smooth entrance/exit */}
-      <div className="absolute left-0 top-0 bottom-0 w-12 sm:w-20 bg-gradient-to-r from-[#F7F9FC] to-transparent z-10 pointer-events-none" />
-      <div className="absolute right-0 top-0 bottom-0 w-12 sm:w-20 bg-gradient-to-l from-[#F7F9FC] to-transparent z-10 pointer-events-none" />
+    <section className="pt-3 pb-4 sm:py-5 bg-white border-b border-slate-100 overflow-hidden relative select-none" aria-label="लोकप्रिय लेख स्लाइडर">
+      {/* Subtle edge fades */}
+      <div className="absolute left-0 top-0 bottom-0 w-8 sm:w-16 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
+      <div className="absolute right-0 top-0 bottom-0 w-8 sm:w-16 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
 
       {/* Marquee Track */}
-      <div className="flex animate-marquee gap-4 px-4 items-center">
-        {duplicatedItems.map((article, idx) => (
-          <div
-            key={`${article.id}-${idx}`}
-            onClick={() => onSelectArticle(article)}
-            className="w-44 sm:w-48 md:w-52 h-60 sm:h-68 md:h-72 shrink-0 rounded-2xl overflow-hidden relative group cursor-pointer shadow-sm hover:shadow-xl transition-all duration-300 border border-[#DFE6EF] bg-white transform hover:-translate-y-1"
-          >
-            {/* Image */}
-            <img
-              src={article.featuredImage}
-              alt={article.title}
-              loading="lazy"
-              referrerPolicy="no-referrer"
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-            />
+      <div className="flex animate-marquee gap-3 sm:gap-4 px-2 sm:px-4 items-center">
+        {duplicatedItems.map((article, idx) => {
+          const isPriority = idx < 4;
+          return (
+            <div
+              key={`${article.id}-${idx}`}
+              onClick={() => onSelectArticle(article)}
+              className="w-36 sm:w-44 md:w-48 h-52 sm:h-64 md:h-72 shrink-0 rounded-2xl overflow-hidden relative group cursor-pointer shadow-[0_4px_16px_rgba(10,22,41,0.08)] hover:shadow-[0_12px_28px_rgba(10,22,41,0.16)] transition-all duration-300 border border-slate-200/80 bg-slate-50 transform hover:-translate-y-1"
+            >
+              <img
+                src={article.featuredImage}
+                alt={article.title}
+                loading={isPriority ? 'eager' : 'lazy'}
+                decoding="async"
+                referrerPolicy="no-referrer"
+                className="w-full h-full object-cover group-hover:scale-106 transition-transform duration-500"
+              />
 
-            {/* Gradient Scrim for readable title overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0A1629]/90 via-[#0A1629]/30 to-transparent flex flex-col justify-end p-3.5 text-white">
-              <span className="text-[10px] font-semibold uppercase tracking-wider text-[#FF7000] bg-white/95 px-2 py-0.5 rounded-full w-fit mb-1 shadow-sm">
-                {article.category}
-              </span>
-              <h3 className="text-xs sm:text-sm font-bold text-white line-clamp-2 leading-tight drop-shadow-sm group-hover:text-orange-200 transition-colors">
-                {article.title}
-              </h3>
+              {/* Bottom gradient overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0A1629]/95 via-[#0A1629]/45 to-transparent flex flex-col justify-end p-2.5 sm:p-3.5 text-white pointer-events-none">
+                <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-orange-200 mb-1 drop-shadow-sm">
+                  {article.category}
+                </span>
+                <h3 className="text-xs sm:text-sm font-bold text-white line-clamp-2 leading-snug drop-shadow-md group-hover:text-orange-300 transition-colors">
+                  {article.title}
+                </h3>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </section>
   );

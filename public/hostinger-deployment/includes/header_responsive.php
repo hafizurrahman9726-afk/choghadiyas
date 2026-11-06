@@ -21,14 +21,8 @@ $categories = db_fetch_all("SELECT * FROM categories WHERE status = 'active' ORD
     
     <meta name="ezoic-site-verification" content="mpuRy2iHDTP1UqsMW2jNRxAfGCjAjP" />
     
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4187031433847125"
-     crossorigin="anonymous"></script>
-    
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9169061246761906"
-     crossorigin="anonymous"></script>
-     
-     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4755467601695915"
-     crossorigin="anonymous"></script>
+    <!-- Google AdSense (Single consolidated async loader preserving all 3 authorized accounts) -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4187031433847125" crossorigin="anonymous"></script>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -65,20 +59,17 @@ $categories = db_fetch_all("SELECT * FROM categories WHERE status = 'active' ORD
     <link rel="icon" type="image/x-icon" href="<?php echo $site_settings['favicon']; ?>">
     <?php endif; ?>
     
-    <!-- Google Fonts -->
+    <!-- Google Fonts (Optimized & Non-blocking) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
     
     <!-- CSS Styles -->
     <link rel="stylesheet" href="<?php echo defined('SITE_URL') ? SITE_URL : ''; ?>/assets/css/style.css">
     <?php
     $theme_css_url = (defined('IS_STAGING_PREVIEW') && IS_STAGING_PREVIEW)
         ? '/staging-test/assets/css/choghadiya-theme.css?v=' . time()
-        : (defined('SITE_URL') ? SITE_URL : '') . '/assets/css/choghadiya-theme.css?v=20261106_v3';
+        : (defined('SITE_URL') ? SITE_URL : '') . '/assets/css/choghadiya-theme.css?v=20261106_v5';
     ?>
     <link rel="stylesheet" href="<?php echo $theme_css_url; ?>">
     

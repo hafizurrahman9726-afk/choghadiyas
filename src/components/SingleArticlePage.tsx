@@ -89,32 +89,41 @@ export const SingleArticlePage: React.FC<SingleArticlePageProps> = ({
               {article.title}
             </h1>
 
-            {/* Author Metadata Row Immediately Below H1 */}
-            <div className="mt-5 pb-5 border-b border-[#DFE6EF] flex flex-wrap items-center justify-between gap-4">
-              <div className="flex items-center gap-3">
-                <img
-                  src={article.authorImage}
-                  alt={article.author}
-                  className="w-11 h-11 rounded-full object-cover border-2 border-orange-100"
-                />
+            {/* Compact Author Bio & Publication Meta Component (Article Top) */}
+            <div className="my-5 p-3.5 sm:p-4 rounded-2xl bg-white border border-[#DFE6EF] shadow-[0_2px_12px_rgba(10,22,41,0.04)] flex flex-wrap items-center justify-between gap-4">
+              <div className="flex items-center gap-3.5">
+                <div className="relative shrink-0">
+                  <img
+                    src="https://choghadiyas.in/uploads/profiles/6a0a995eb34a7.webp"
+                    alt={article.author}
+                    className="w-12 h-12 rounded-full object-cover border-2 border-orange-200 shadow-sm"
+                    width={48}
+                    height={48}
+                  />
+                </div>
                 <div>
-                  <div className="flex items-center gap-1.5">
-                    <span className="text-xs text-[#64748B]">By</span>
-                    <strong className="text-sm font-bold text-[#0A1629]">{article.author}</strong>
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-orange-50 text-[#FF7000] border border-orange-200">
+                      लेखक
+                    </span>
+                    <strong className="text-sm sm:text-base font-extrabold text-[#0A1629]">{article.author}</strong>
+                    <span className="inline-flex items-center gap-1 text-[10px] font-bold text-[#0D9488] bg-teal-50 border border-teal-200 px-1.5 py-0.5 rounded-full">
+                      सत्यापित
+                    </span>
                   </div>
-                  <p className="text-[11px] text-[#64748B]">{article.authorRole}</p>
+                  <p className="text-xs text-[#64748B] mt-0.5">संस्थापक एवं वरिष्ठ कंटेंट रिसर्चर</p>
                 </div>
               </div>
 
-              <div className="flex items-center gap-4 text-xs text-[#64748B]">
+              <div className="flex items-center gap-3 sm:gap-4 text-xs text-[#64748B]">
                 <span className="flex items-center gap-1">
-                  <Calendar className="w-3.5 h-3.5 text-[#94A3B8]" />
-                  <span>Published: <strong>{article.formattedDate}</strong></span>
+                  <Calendar className="w-3.5 h-3.5 text-[#FF7000]" />
+                  <span>प्रकाशित: <strong className="text-[#0A1629]">{article.formattedDate}</strong></span>
                 </span>
                 <span>•</span>
                 <span className="flex items-center gap-1">
                   <Clock className="w-3.5 h-3.5 text-[#94A3B8]" />
-                  <span>Read time: <strong>{article.readingTime}</strong></span>
+                  <span>{article.readingTime}</span>
                 </span>
                 <button
                   onClick={handleShare}

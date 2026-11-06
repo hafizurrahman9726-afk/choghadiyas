@@ -144,15 +144,7 @@ export default function App() {
       ) : (
         /* HOMEPAGE VIEW (Matching Screenshots 1, 2, 3) */
         <main className="flex-1">
-          {/* HERO SECTION (Screenshot 1) */}
-          <Hero
-            searchQuery={searchQuery}
-            onSearchChange={setSearchQuery}
-            onSearchSubmit={handleHeroSearchSubmit}
-            onClearSearch={handleClearSearch}
-          />
-
-          {/* AUTOMATIC CONTINUOUS IMAGE SLIDER (Screenshot 1) */}
+          {/* TOP AUTOMATIC CONTINUOUS IMAGE SLIDER (Placed Immediately Below Header) */}
           <ImageSlider
             articles={ARTICLES_DATA}
             onSelectArticle={handleSelectArticle}

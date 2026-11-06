@@ -29,6 +29,13 @@ if (!$post) {
     exit;
 }
 
+// Verified Author Information
+$verified_author_name = !empty($post['author_name']) ? $post['author_name'] : 'Shiv Kumar Pandit';
+$verified_author_image = 'https://choghadiyas.in/uploads/profiles/6a0a995eb34a7.webp';
+$author_profile_url = (defined('SITE_URL') ? SITE_URL : 'https://choghadiyas.in') . '/about';
+$verified_author_role = !empty($post['author_role']) && $post['author_role'] !== 'admin' ? $post['author_role'] : 'संस्थापक एवं वरिष्ठ कंटेंट रिसर्चर';
+$verified_author_bio = !empty($post['author_bio']) ? $post['author_bio'] : 'सनातन संस्कृति, पंचांग गणना, व्रत-त्योहारों के प्रामाणिक नियमों और पूजा सामग्री के विधिवत संकलन हेतु समर्पित शोधकर्ता। हमारे सभी लेख शास्त्रीय पंचांगों और प्रामाणिक धर्मग्रंथों के अध्ययन पर आधारित हैं।';
+
 // Increment view count
 db_execute("UPDATE posts SET views = views + 1 WHERE id = ?", [$post['id']]);
 
@@ -167,7 +174,10 @@ $article_schema = [
     'description' => $page_description,
     'author' => [
         '@type' => 'Person',
-        'name' => $post['author_name'] ?? 'Vedic Expert'
+        'name' => $verified_author_name,
+        'url' => $author_profile_url,
+        'image' => $verified_author_image,
+        'jobTitle' => 'Vedic Author & Spiritual Content Researcher'
     ],
     'publisher' => [
         '@type' => 'Organization',
@@ -397,14 +407,44 @@ require_once __DIR__ . '/../includes/header_responsive.php';
                         
                         <h1 class="article-title-premium"><?php echo htmlspecialchars($post['title']); ?></h1>
                         
-                        <div class="article-meta-premium">
-                            <div class="meta-item-premium">
-                                <div class="meta-icon">
-                                    <i class="icon-calendar"></i>
+                        <!-- Compact Author Bio & Publication Meta Component (Article Top) -->
+                        <div class="article-author-bio-compact" role="region" aria-label="लेखक और प्रकाशन विवरण">
+                            <div class="author-bio-compact-left">
+                                <a href="<?php echo $author_profile_url; ?>" class="author-compact-avatar-link" title="<?php echo htmlspecialchars($verified_author_name); ?> का परिचय देखें" aria-label="<?php echo htmlspecialchars($verified_author_name); ?>">
+                                    <img src="<?php echo htmlspecialchars($verified_author_image); ?>" alt="<?php echo htmlspecialchars($verified_author_name); ?>" class="author-compact-avatar" width="52" height="52" loading="eager" decoding="async">
+                                </a>
+                                <div class="author-compact-meta">
+                                    <div class="author-compact-name-row">
+                                        <span class="author-compact-badge">लेखक</span>
+                                        <a href="<?php echo $author_profile_url; ?>" class="author-compact-name" title="लेखक प्रोफाइल">
+                                            <?php echo htmlspecialchars($verified_author_name); ?>
+                                        </a>
+                                        <span class="author-verified-indicator" title="सत्यापित लेखक">
+                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="#0D9488" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                                            <span class="verified-label">सत्यापित</span>
+                                        </span>
+                                    </div>
+                                    <div class="author-compact-title">
+                                        <?php echo htmlspecialchars($verified_author_role); ?>
+                                    </div>
                                 </div>
-                                <div class="meta-text">
-                                    <span class="meta-label">प्रकाशित</span>
-                                    <span class="meta-value"><?php echo format_date($post['publish_date']); ?></span>
+                            </div>
+
+                            <div class="author-bio-compact-right">
+                                <div class="meta-date-row">
+                                    <span class="meta-date-item">
+                                        <i class="icon-calendar" aria-hidden="true"></i>
+                                        <span class="date-label">प्रकाशित:</span>
+                                        <time datetime="<?php echo date('Y-m-d', strtotime($post['publish_date'])); ?>" class="date-value"><?php echo format_date($post['publish_date']); ?></time>
+                                    </span>
+                                    <?php if (!empty($post['updated_at']) && date('Y-m-d', strtotime($post['updated_at'])) !== date('Y-m-d', strtotime($post['publish_date']))): ?>
+                                    <span class="meta-date-divider">•</span>
+                                    <span class="meta-date-item meta-date-updated" title="अंतिम संशोधन तिथि">
+                                        <i class="fas fa-sync-alt" aria-hidden="true"></i>
+                                        <span class="date-label">अपडेट:</span>
+                                        <time datetime="<?php echo date('Y-m-d', strtotime($post['updated_at'])); ?>" class="date-value"><?php echo format_date($post['updated_at']); ?></time>
+                                    </span>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                         </div>
@@ -509,36 +549,28 @@ require_once __DIR__ . '/../includes/header_responsive.php';
                     </div>
                 </article>
                 
-                <!-- लेखक जानकारी -->
-                <?php if ($post['author_name']): ?>
-                <div class="author-bio-premium">
+                <!-- लेखक जानकारी (Bottom Author Bio Card) -->
+                <div class="author-bio-premium" id="authorBio">
                     <div class="author-header-premium">
                         <div class="author-avatar-premium">
-                            <?php if ($post['author_image']): ?>
-                            <img src="<?php echo $post['author_image']; ?>" alt="<?php echo htmlspecialchars($post['author_name']); ?>">
-                            <?php else: ?>
-                            <div class="author-avatar-placeholder">
-                                <span><?php echo strtoupper(substr($post['author_name'], 0, 2)); ?></span>
-                            </div>
-                            <?php endif; ?>
+                            <a href="<?php echo $author_profile_url; ?>" title="<?php echo htmlspecialchars($verified_author_name); ?> का परिचय देखें">
+                                <img src="<?php echo htmlspecialchars($verified_author_image); ?>" alt="<?php echo htmlspecialchars($verified_author_name); ?>" width="76" height="76" loading="lazy" decoding="async">
+                            </a>
                         </div>
                         <div class="author-details-premium">
                             <div class="author-name-verified">
-                                <h4><?php echo htmlspecialchars($post['author_name']); ?></h4>
-                                <?php if ($post['author_role'] === 'admin' || $post['author_role'] === 'author'): ?>
+                                <h4><a href="<?php echo $author_profile_url; ?>" style="color: inherit; text-decoration: none;"><?php echo htmlspecialchars($verified_author_name); ?></a></h4>
                                 <span class="verification-badge" title="सत्यापित लेखक">
                                     <i class="fas fa-check-circle"></i>
-                                    <span class="badge-text">सत्यापित</span>
+                                    <span class="badge-text">सत्यापित लेखक</span>
                                 </span>
-                                <?php endif; ?>
                             </div>
-                            <?php if ($post['author_role']): ?>
-                            <span class="author-role-premium"><?php echo htmlspecialchars($post['author_role']); ?></span>
-                            <?php endif; ?>
-                            <?php if ($post['author_bio']): ?>
-                            <p><?php echo htmlspecialchars($post['author_bio']); ?></p>
-                            <?php endif; ?>
+                            <span class="author-role-premium"><?php echo htmlspecialchars($verified_author_role); ?></span>
+                            <p><?php echo htmlspecialchars($verified_author_bio); ?></p>
                             <div class="author-meta-links">
+                                <a href="<?php echo $author_profile_url; ?>" class="author-meta-link" title="लेखक प्रोफाइल देखें">
+                                    <i class="fas fa-user-circle"></i> लेखक का संपूर्ण परिचय
+                                </a>
                                 <a href="mailto:<?php echo htmlspecialchars(AUTHOR_EMAIL); ?>" class="author-meta-link" title="Email the author">
                                     <i class="fas fa-envelope"></i> <?php echo htmlspecialchars(AUTHOR_EMAIL); ?>
                                 </a>
@@ -546,7 +578,6 @@ require_once __DIR__ . '/../includes/header_responsive.php';
                         </div>
                     </div>
                 </div>
-                <?php endif; ?>
                 
                 <!-- FAQ Section with Accordion -->
                 <?php if ($post_faqs): ?>
@@ -1233,6 +1264,249 @@ document.addEventListener('DOMContentLoaded', function() {
         background: white;
         border-radius: 12px;
         box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+}
+
+/* ============================================================
+   COMPACT AUTHOR BIO & PUBLICATION METADATA (ARTICLE TOP)
+   ============================================================ */
+.article-author-bio-compact {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 14px;
+    padding: 0.85rem 1.25rem;
+    margin: 1.25rem 0 1.75rem 0;
+    box-shadow: 0 2px 10px rgba(10, 22, 41, 0.04);
+}
+
+.author-bio-compact-left {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    min-width: 0;
+}
+
+.author-compact-avatar-link {
+    display: block;
+    flex-shrink: 0;
+    border-radius: 50%;
+    transition: transform 0.2s ease;
+}
+
+.author-compact-avatar-link:hover {
+    transform: scale(1.05);
+}
+
+.author-compact-avatar {
+    width: 52px;
+    height: 52px;
+    min-width: 52px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2.5px solid #FED7AA;
+    box-shadow: 0 2px 8px rgba(249, 115, 22, 0.15);
+    display: block;
+}
+
+.author-compact-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    min-width: 0;
+}
+
+.author-compact-name-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.author-compact-badge {
+    background: #FFF7ED;
+    color: #EA580C;
+    border: 1px solid #FED7AA;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 9999px;
+    letter-spacing: 0.02em;
+    line-height: 1.3;
+}
+
+.author-compact-name {
+    font-size: 1.02rem;
+    font-weight: 800;
+    color: #0A1629;
+    text-decoration: none;
+    line-height: 1.3;
+    transition: color 0.2s ease;
+}
+
+.author-compact-name:hover {
+    color: #FF7000;
+    text-decoration: underline;
+}
+
+.author-verified-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    background: #F0FDF4;
+    color: #0D9488;
+    border: 1px solid #BBF7D0;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 9999px;
+}
+
+.author-compact-title {
+    font-size: 0.8rem;
+    color: #64748B;
+    font-weight: 500;
+    line-height: 1.3;
+}
+
+.author-bio-compact-right {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.meta-date-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+    font-size: 0.82rem;
+    color: #64748B;
+}
+
+.meta-date-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.meta-date-item i {
+    color: #FF7000;
+    font-size: 0.85rem;
+}
+
+.meta-date-item .date-label {
+    color: #64748B;
+    font-weight: 500;
+}
+
+.meta-date-item .date-value {
+    color: #0A1629;
+    font-weight: 700;
+}
+
+.meta-date-divider {
+    color: #CBD5E1;
+}
+
+@media (max-width: 640px) {
+    .article-author-bio-compact {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 0.85rem 1rem;
+        gap: 0.75rem;
+    }
+    .author-bio-compact-right {
+        width: 100%;
+        padding-top: 0.65rem;
+        border-top: 1px solid #F1F5F9;
+    }
+}
+
+/* Bottom Author Bio Card Enhancements */
+.author-bio-premium {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 18px;
+    padding: 1.75rem;
+    margin: 2rem 0;
+    box-shadow: 0 4px 16px rgba(10, 22, 41, 0.04);
+}
+
+.author-header-premium {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+}
+
+.author-avatar-premium img {
+    width: 76px;
+    height: 76px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #FED7AA;
+    box-shadow: 0 4px 12px rgba(249, 115, 22, 0.15);
+}
+
+.author-details-premium h4 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #0A1629;
+}
+
+.author-role-premium {
+    display: inline-block;
+    color: #EA580C;
+    font-weight: 700;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    margin: 0.25rem 0 0.5rem 0;
+}
+
+.author-details-premium p {
+    font-size: 0.92rem;
+    line-height: 1.65;
+    color: #475569;
+    margin: 0.5rem 0 1rem 0;
+}
+
+.author-meta-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.author-meta-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #0A1629;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.author-meta-link:hover {
+    color: #FF7000;
+}
+
+@media (max-width: 640px) {
+    .author-header-premium {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    .author-name-verified {
+        justify-content: center;
+    }
+    .author-meta-links {
+        justify-content: center;
     }
 }
 
