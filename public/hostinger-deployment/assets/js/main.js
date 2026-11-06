@@ -1,20 +1,14 @@
 // Choghadiyas.in — Main Client-side Script
-// Powers Marquee Slider, Live Choghadiya Tool, 30-Article Grid, Search, Mobile Drawer
-
+// Powers Smooth Marquee Slider, 30-Article Grid with Live Category Filtering & Pagination, Search & Mobile Drawer
 (function () {
   'use strict';
 
   var articles = window.CHOGHADIYA_ARTICLES || [];
-  var engine = window.ChoghadiyaEngine;
-
-  var currentCity = 'delhi';
-  var currentDate = new Date();
-  var currentTab = 'day';
   var currentCategory = 'all';
   var currentPage = 1;
-  var articlesPerPage = 30; // Exactly 30 articles per page
+  var articlesPerPage = 12; // 12 articles per page for clean pagination
 
-  // --- 1. MOBILE DRAWER ---
+  // --- 1. MOBILE DRAWER NAVIGATION ---
   window.toggleMobileDrawer = function (forceState) {
     var drawer = document.getElementById('mobileDrawer');
     var overlay = document.getElementById('mobileDrawerOverlay');
@@ -37,96 +31,26 @@
     }
   };
 
-  window.handleMobileSearch = function (e) {
-    e.preventDefault();
-    var inp = document.getElementById('mobile-drawer-search-input');
-    if (!inp) return;
-    var q = inp.value.trim();
-    if (!q) return;
-    window.toggleMobileDrawer(false);
-    var mainInp = document.getElementById('main-search-input');
-    if (mainInp) {
-      mainInp.value = q;
-      window.handleSearchSubmit(e);
-    }
-  };
+  // --- 2. CONTINUOUS MARQUEE SLIDER TOUCH & HOVER PAUSE ---
+  function initSliderControls() {
+    var track = document.getElementById('slider-track');
+    if (!track) return;
 
-  // --- 2. RENDER CHOGHADIYA TOOL ---
-  function renderChoghadiya() {
-    if (!engine) return;
+    // Mobile touch pause
+    track.addEventListener('touchstart', function () {
+      track.classList.add('is-paused');
+    }, { passive: true });
 
-    var data = engine.getData(currentDate, currentCity);
+    track.addEventListener('touchend', function () {
+      track.classList.remove('is-paused');
+    }, { passive: true });
 
-    var sunriseEl = document.getElementById('sunrise-display');
-    var sunsetEl = document.getElementById('sunset-display');
-    var rahuEl = document.getElementById('rahu-display');
-    var abhijitEl = document.getElementById('abhijit-display');
-
-    if (sunriseEl) sunriseEl.textContent = data.sunrise;
-    if (sunsetEl) sunsetEl.textContent = data.sunset;
-    if (rahuEl) rahuEl.textContent = data.rahuKaal;
-    if (abhijitEl) abhijitEl.textContent = data.abhijitMuhurat;
-
-    var bannerEl = document.getElementById('active-slot-banner');
-    if (bannerEl && data.currentSlot) {
-      var slotNameEl = document.getElementById('current-slot-name');
-      var slotTimeEl = document.getElementById('current-slot-time');
-      if (slotNameEl) slotNameEl.textContent = data.currentSlot.name + ' (' + data.currentSlot.nature + ')';
-      if (slotTimeEl) slotTimeEl.textContent = data.currentSlot.start + ' से ' + data.currentSlot.end;
-    }
-
-    var tbody = document.getElementById('choghadiya-tbody');
-    if (!tbody) return;
-
-    var list = currentTab === 'day' ? data.daySlots : data.nightSlots;
-    var html = '';
-
-    list.forEach(function (slot) {
-      var isCurrent = data.currentSlot && data.currentSlot.start === slot.start && currentTab === (data.isDay ? 'day' : 'night');
-      var rowStyle = isCurrent ? 'background:#FFF8F0; font-weight:700;' : '';
-
-      html += '<tr style="' + rowStyle + '">';
-      html += '  <td style="font-weight:700; color:#0A1629;">' + (isCurrent ? '⚡ ' : '') + slot.name + '</td>';
-      html += '  <td>' + slot.start + '</td>';
-      html += '  <td>' + slot.end + '</td>';
-      html += '  <td><span class="nature-badge ' + slot.color + '">' + slot.nature + '</span></td>';
-      html += '  <td style="color:#64748B;">' + slot.planet + '</td>';
-      html += '  <td style="font-size:0.85rem; color:#475569;">' + slot.suitableFor + '</td>';
-      html += '</tr>';
-    });
-
-    tbody.innerHTML = html;
+    track.addEventListener('touchcancel', function () {
+      track.classList.remove('is-paused');
+    }, { passive: true });
   }
 
-  window.switchTab = function (tab) {
-    currentTab = tab;
-    var dayBtn = document.getElementById('tab-day');
-    var nightBtn = document.getElementById('tab-night');
-    if (dayBtn && nightBtn) {
-      if (tab === 'day') {
-        dayBtn.classList.add('active');
-        nightBtn.classList.remove('active');
-      } else {
-        nightBtn.classList.add('active');
-        dayBtn.classList.remove('active');
-      }
-    }
-    renderChoghadiya();
-  };
-
-  window.handleCityChange = function (cityId) {
-    currentCity = cityId;
-    renderChoghadiya();
-  };
-
-  window.handleDateChange = function (dateStr) {
-    if (dateStr) {
-      currentDate = new Date(dateStr);
-      renderChoghadiya();
-    }
-  };
-
-  // --- 3. 30 ARTICLES PER PAGE & FILTERING ---
+  // --- 3. ARTICLES FILTERING & NUMBERED PAGINATION ---
   function getFilteredArticles() {
     if (currentCategory === 'all') return articles;
     return articles.filter(function (a) {
@@ -143,7 +67,8 @@
     var pageArticles = filtered.slice(startIndex, startIndex + articlesPerPage);
 
     if (pageArticles.length === 0) {
-      grid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:3rem; color:#64748B;">कोई लेख उपलब्ध नहीं है।</div>';
+      grid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:3rem; color:#64748B; font-size:1.05rem;">इस श्रेणी में वर्तमान में कोई लेख उपलब्ध नहीं है।</div>';
+      renderPagination(0);
       return;
     }
 
@@ -182,13 +107,22 @@
     }
 
     var html = '';
-    for (var i = 1; i <= totalPages; i++) {
-      var activeClass = i === currentPage ? 'active' : '';
-      html += '<button class="page-btn ' + activeClass + '" onclick="window.setPage(' + i + ')">' + i + '</button>';
+
+    // Previous Button
+    if (currentPage > 1) {
+      html += '<button class="page-btn prev" onclick="window.setPage(' + (currentPage - 1) + ')" aria-label="पिछला पृष्ठ">← पिछला</button>';
     }
 
+    // Numbered Buttons
+    for (var i = 1; i <= totalPages; i++) {
+      var activeClass = i === currentPage ? 'active' : '';
+      var ariaSelected = i === currentPage ? 'aria-current="page"' : '';
+      html += '<button class="page-btn ' + activeClass + '" onclick="window.setPage(' + i + ')" ' + ariaSelected + ' aria-label="पृष्ठ ' + i + '">' + i + '</button>';
+    }
+
+    // Next Button
     if (currentPage < totalPages) {
-      html += '<button class="page-btn next" onclick="window.setPage(' + (currentPage + 1) + ')">अगला →</button>';
+      html += '<button class="page-btn next" onclick="window.setPage(' + (currentPage + 1) + ')" aria-label="अगला पृष्ठ">अगला →</button>';
     }
 
     wrap.innerHTML = html;
@@ -199,82 +133,116 @@
     currentPage = 1;
 
     var btns = document.querySelectorAll('.category-filter-btn');
-    btns.forEach(function (b) { b.classList.remove('active'); });
-    if (btnEl) btnEl.classList.add('active');
+    btns.forEach(function (btn) {
+      btn.classList.remove('active');
+      btn.setAttribute('aria-selected', 'false');
+    });
+
+    if (btnEl) {
+      btnEl.classList.add('active');
+      btnEl.setAttribute('aria-selected', 'true');
+    }
 
     renderArticlesGrid();
-
-    var section = document.getElementById('articles-section');
-    if (section) section.scrollIntoView({ behavior: 'smooth' });
   };
 
   window.setPage = function (pageNum) {
     currentPage = pageNum;
     renderArticlesGrid();
-    var section = document.getElementById('articles-section');
-    if (section) section.scrollIntoView({ behavior: 'smooth' });
+    var sec = document.getElementById('articles-section');
+    if (sec) {
+      sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
+  // --- 4. ACCESSIBLE SEARCH MODAL & FORM ---
+  window.openSearchModal = function () {
+    var m = document.getElementById('searchModal');
+    if (!m) return;
+    m.classList.add('active');
+    var inp = document.getElementById('modalSearchInput');
+    if (inp) {
+      inp.focus();
+      renderSearchResults(inp.value.trim());
+    }
+    document.body.style.overflow = 'hidden';
+  };
+
+  window.closeSearchModal = function () {
+    var m = document.getElementById('searchModal');
+    if (!m) return;
+    m.classList.remove('active');
+    document.body.style.overflow = '';
   };
 
   window.handleSearchSubmit = function (e) {
-    e.preventDefault();
-    var input = document.getElementById('main-search-input');
-    if (!input) return;
-    var query = input.value.trim().toLowerCase();
-    if (!query) return;
-
-    var matched = articles.filter(function (a) {
-      return a.title.toLowerCase().indexOf(query) !== -1 ||
-             a.excerpt.toLowerCase().indexOf(query) !== -1 ||
-             a.category.toLowerCase().indexOf(query) !== -1;
-    });
-
-    var grid = document.getElementById('articles-grid');
-    if (!grid) return;
-
-    if (matched.length === 0) {
-      grid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:3rem; color:#64748B;">"' + query + '" से संबंधित कोई लेख नहीं मिला।</div>';
-    } else {
-      var html = '';
-      matched.forEach(function (a) {
-        html += [
-          '<article class="article-card">',
-          '  <a href="' + a.url + '" class="article-thumb-link" aria-label="' + a.title + '">',
-          '    <img src="' + a.featuredImage + '" alt="' + a.title + '" class="article-thumb" loading="lazy" decoding="async" width="400" height="225">',
-          '  </a>',
-          '  <div class="article-body">',
-          '    <span class="category-badge">' + a.category + '</span>',
-          '    <h3 class="article-title"><a href="' + a.url + '">' + a.title + '</a></h3>',
-          '    <p class="article-excerpt">' + a.excerpt + '</p>',
-          '    <div class="article-footer">',
-          '      <span class="article-meta">' + a.author + ' · ' + a.publishDate + '</span>',
-          '      <a href="' + a.url + '" class="read-more-link" aria-label="' + a.title + ' पढ़ें">पूरा पढ़ें →</a>',
-          '    </div>',
-          '  </div>',
-          '</article>'
-        ].join('');
-      });
-      grid.innerHTML = html;
+    if (e && e.preventDefault) e.preventDefault();
+    var inp = document.getElementById('main-search-input');
+    var q = inp ? inp.value.trim() : '';
+    window.openSearchModal();
+    var modalInp = document.getElementById('modalSearchInput');
+    if (modalInp) {
+      modalInp.value = q;
+      renderSearchResults(q);
     }
-
-    var wrap = document.getElementById('pagination-wrap');
-    if (wrap) wrap.innerHTML = '';
-
-    var section = document.getElementById('articles-section');
-    if (section) section.scrollIntoView({ behavior: 'smooth' });
   };
 
-  // --- INITIALIZE ---
-  document.addEventListener('DOMContentLoaded', function () {
-    var dateInput = document.getElementById('date-select');
-    if (dateInput) {
-      var now = new Date();
-      var yyyy = now.getFullYear();
-      var mm = String(now.getMonth() + 1).padStart(2, '0');
-      var dd = String(now.getDate()).padStart(2, '0');
-      dateInput.value = yyyy + '-' + mm + '-' + dd;
+  window.handleModalSearchInput = function (q) {
+    renderSearchResults(q.trim());
+  };
+
+  function renderSearchResults(query) {
+    var container = document.getElementById('modalSearchResults');
+    if (!container) return;
+
+    if (!query) {
+      container.innerHTML = '<div style="text-align:center; padding:2rem; color:#94A3B8;">खोजने के लिए शब्द टाइप करें... (उदा. पूजा, व्रत, मुहूर्त)</div>';
+      return;
     }
 
-    renderChoghadiya();
+    query = query.toLowerCase();
+    var matched = articles.filter(function (a) {
+      return (
+        a.title.toLowerCase().indexOf(query) !== -1 ||
+        a.excerpt.toLowerCase().indexOf(query) !== -1 ||
+        a.category.toLowerCase().indexOf(query) !== -1
+      );
+    });
+
+    if (matched.length === 0) {
+      container.innerHTML = '<div style="text-align:center; padding:2rem; color:#64748B;">"' + query + '" के लिए कोई लेख नहीं मिला।</div>';
+      return;
+    }
+
+    var html = '';
+    matched.slice(0, 10).forEach(function (a) {
+      html += [
+        '<a href="' + a.url + '" class="search-result-item" style="display:flex; gap:1rem; padding:0.85rem; border-bottom:1px solid #E2E8F0; text-decoration:none; color:inherit; align-items:center;">',
+        '  <img src="' + a.featuredImage + '" alt="' + a.title + '" style="width:64px; height:64px; object-fit:cover; border-radius:8px; flex-shrink:0;">',
+        '  <div>',
+        '    <span style="font-size:10px; font-weight:700; color:#FF7000; text-transform:uppercase;">' + a.category + '</span>',
+        '    <h4 style="font-size:0.95rem; font-weight:700; color:#0A1629; margin:2px 0 4px; line-height:1.35;">' + a.title + '</h4>',
+        '    <span style="font-size:0.8rem; color:#64748B;">' + a.publishDate + '</span>',
+        '  </div>',
+        '</a>'
+      ].join('');
+    });
+
+    container.innerHTML = html;
+  }
+
+  // --- 5. INITIALIZATION ---
+  document.addEventListener('DOMContentLoaded', function () {
+    initSliderControls();
+    renderArticlesGrid();
+  });
+
+  // Global escape key to close search modal
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+      window.closeSearchModal();
+      window.toggleMobileDrawer(false);
+    }
   });
 
 })();

@@ -1,389 +1,251 @@
 <?php
 /**
- * Choghadiyas.in — Premium Redesigned Homepage Template
- * 100% Genuine Published Articles with Real /uploads/posts/ webp images
- * Suppresses Duplicate Header
+ * Choghadiyas.in — High-Performance Clean White Production Homepage
+ * Optimized for Core Web Vitals, Google AdSense Readiness & Mobile Responsiveness
  */
+$page_title = "चौघड़िया, पंचांग, व्रत-त्योहार और पूजा विधि की जानकारी - Choghadiyas.in";
+$page_description = "Choghadiyas.in पर जानें चौघड़िया और पंचांग से जुड़ी जानकारी, व्रत-त्योहारों की तिथियाँ, शुभ मुहूर्त, पूजा विधियाँ और आवश्यक सामग्री।";
+$canonical_url = "https://choghadiyas.in/";
 
-require_once __DIR__ . '/../config/config.php';
-
-if (function_exists('date_default_timezone_set')) {
-    date_default_timezone_set('Asia/Kolkata');
-}
-
-// CRITICAL: Suppress duplicate old yellow header
-$GLOBALS['hide_default_header'] = true;
-$hide_default_header = true;
-
-// Include standard header (preserves SEO meta, AdSense scripts, Analytics, OpenGraph, Canonical)
-if (file_exists(__DIR__ . '/../includes/header_responsive.php')) {
-    require_once __DIR__ . '/../includes/header_responsive.php';
-} elseif (file_exists(__DIR__ . '/../includes/header.php')) {
-    require_once __DIR__ . '/../includes/header.php';
-}
+// Include Unified Site Header
+require_once __DIR__ . '/../includes/header_responsive.php';
 ?>
 
-<!-- Theme Stylesheet (Suppresses Old Yellow Header & Injects New Design) -->
-<link rel="stylesheet" href="/assets/css/choghadiya-theme.css">
+<main id="main-content" class="homepage-main">
 
-<!-- Single Premium White Header (Screenshots 1 & 4) -->
-<header class="site-header" id="premiumHeader">
-  <div class="container">
-    <div class="header-inner">
-      <a href="/" class="brand-logo" aria-label="Choghadiyas.in Homepage">
-        <div class="brand-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <circle cx="12" cy="12" r="4"/>
-            <path d="M12 2v2"/><path d="M12 20v2"/>
-            <path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/>
-            <path d="M2 12h2"/><path d="M20 12h2"/>
-            <path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/>
-          </svg>
-        </div>
-        <div>
-          <div class="brand-title">Choghadiya<span>s.in</span></div>
-          <div class="brand-subtitle">वैदिक चौघड़िया एवं पंचांग</div>
-        </div>
-      </a>
-
-      <!-- Desktop Nav Pills -->
-      <nav class="nav-pills" aria-label="मुख्य नेविगेशन">
-        <a href="/" class="nav-pill active">Home</a>
-        <a href="#choghadiya-section" class="nav-pill">आज का चौघड़िया</a>
-        <a href="#choghadiya-section" class="nav-pill">पंचांग</a>
-        <a href="#articles-section" class="nav-pill" onclick="window.setCategory('vrat', this); return false;">व्रत और त्योहार</a>
-        <a href="#articles-section" class="nav-pill" onclick="window.setCategory('muhurat', this); return false;">शुभ मुहूर्त</a>
-        <a href="#articles-section" class="nav-pill" onclick="window.setCategory('puja', this); return false;">पूजा विधि</a>
-        <a href="/about" class="nav-pill">About Us</a>
-        <a href="/contact" class="nav-pill">Contact Us</a>
-      </nav>
-
-      <!-- Search & Mobile Menu Toggle -->
-      <div class="header-actions">
-        <button class="search-toggle-btn" onclick="document.getElementById('main-search-input').focus();" aria-label="खोजें">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
-          </svg>
-        </button>
-        <button class="mobile-menu-btn" id="mobileMenuToggle" onclick="window.toggleMobileDrawer();" aria-label="मेनू खोलें" aria-expanded="false">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/>
-          </svg>
-        </button>
-      </div>
-    </div>
-  </div>
-</header>
-
-<!-- Mobile Navigation Drawer -->
-<div class="mobile-drawer-overlay" id="mobileDrawerOverlay" onclick="window.toggleMobileDrawer(false);"></div>
-<aside class="mobile-drawer" id="mobileDrawer" aria-label="मोबाइल नेविगेशन">
-  <div class="mobile-drawer-header">
-    <div class="brand-title" style="font-size:1.15rem;">Choghadiya<span style="color:var(--accent-orange);">s.in</span></div>
-    <button class="drawer-close-btn" onclick="window.toggleMobileDrawer(false);" aria-label="मेनू बंद करें">✕</button>
-  </div>
-  <div class="mobile-drawer-search">
-    <form onsubmit="window.handleMobileSearch(event);">
-      <input type="text" id="mobile-drawer-search-input" placeholder="खोजें (e.g. चौघड़िया, मुहूर्त)..." aria-label="मोबाइल खोज">
-      <button type="submit" aria-label="खोजें">→</button>
-    </form>
-  </div>
-  <nav class="mobile-drawer-nav">
-    <a href="/" class="mobile-nav-link active">Home</a>
-    <a href="#choghadiya-section" class="mobile-nav-link" onclick="window.toggleMobileDrawer(false);">आज का चौघड़िया</a>
-    <a href="#choghadiya-section" class="mobile-nav-link" onclick="window.toggleMobileDrawer(false);">दैनिक पंचांग</a>
-    <a href="#articles-section" class="mobile-nav-link" onclick="window.setCategory('vrat'); window.toggleMobileDrawer(false);">व्रत और त्योहार</a>
-    <a href="#articles-section" class="mobile-nav-link" onclick="window.setCategory('muhurat'); window.toggleMobileDrawer(false);">शुभ मुहूर्त 2026</a>
-    <a href="#articles-section" class="mobile-nav-link" onclick="window.setCategory('puja'); window.toggleMobileDrawer(false);">पूजा विधि व सामग्री</a>
-    <a href="/about" class="mobile-nav-link">About Us (हमारे बारे में)</a>
-    <a href="/contact" class="mobile-nav-link">Contact Us (संपर्क करें)</a>
-    <a href="/editorial-policy" class="mobile-nav-link">Editorial Policy</a>
-    <a href="/privacy-policy" class="mobile-nav-link">Privacy Policy</a>
-  </nav>
-</aside>
-
-<div class="main-content-wrap">
   <!-- Hero Section -->
-  <section class="hero-section">
-    <div class="container">
+  <section class="hero-section" aria-label="मुख्य विवरण">
+    <div class="container hero-content">
+      <div class="hero-badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+        </svg>
+        <span>धार्मिक एवं पंचांग मार्गदर्शिका</span>
+      </div>
+
       <h1 class="hero-title">
-        Choghadiyas.in — आज का चौघड़िया एवं <span>शुभ मुहूर्त</span>
+        चौघड़िया, पंचांग, व्रत-त्योहार और पूजा विधि की जानकारी
       </h1>
+
       <p class="hero-subtitle">
-        भारत का सबसे विश्वसनीय वैदिक पंचांग और काल-गणना पोर्टल। जानिए दिन व रात का चौघड़िया, राहुकाल, अभिजित मुहूर्त और दैनिक पंचांग।
+        Choghadiyas.in पर जानें चौघड़िया और पंचांग से जुड़ी जानकारी, व्रत-त्योहारों की तिथियाँ, शुभ मुहूर्त, पूजा विधियाँ और आवश्यक सामग्री। हमारे लेखों में धार्मिक परंपराओं, मान्यताओं और उपयोगी जानकारियों को सरल हिंदी में समझाया गया है।
       </p>
 
+      <p class="hero-supporting-text">
+        व्रत की तैयारी से लेकर पूजा सामग्री और शुभ अवसरों तक, अपनी जरूरत के अनुसार विषय चुनें और संबंधित लेख पढ़ें। तिथि और मुहूर्त से जुड़ी जानकारी के लिए स्थान, समय और स्थानीय पंचांग का ध्यान रखें।
+      </p>
+
+      <!-- Accessible Real Search Bar -->
       <div class="search-bar-wrap">
-        <form class="search-bar-form" onsubmit="window.handleSearchSubmit(event);">
+        <form class="search-bar-form" onsubmit="window.handleSearchSubmit(event);" role="search" aria-label="लेख खोजें">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2.2" style="margin-right:0.5rem;" aria-hidden="true">
             <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
           </svg>
+          <label for="main-search-input" class="sr-only" style="position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0;">लेख, व्रत या पूजा विधि खोजें</label>
           <input 
             type="text" 
             id="main-search-input" 
             class="search-bar-input" 
-            placeholder="Search Vedic articles (e.g. चौघड़िया, मुहूर्त, पंचांग, छठ पूजा)..."
-            aria-label="Search articles"
+            placeholder="लेख, व्रत या पूजा विधि खोजें..."
+            aria-label="लेख, व्रत या पूजा विधि खोजें"
           >
-          <button type="submit" class="search-submit-btn">Search →</button>
+          <button type="submit" class="search-submit-btn" aria-label="खोजें">Search →</button>
         </form>
       </div>
+
+      <!-- Quick Action Category Pills -->
+      <div class="hero-quick-pills" style="display:flex; flex-wrap:wrap; justify-content:center; gap:0.6rem; margin-top:1.5rem;">
+        <a href="<?php echo $base_url; ?>/category/vrat-tyohar" class="quick-pill">व्रत और त्योहार</a>
+        <a href="<?php echo $base_url; ?>/category/shubh-muhurat-guide" class="quick-pill">शुभ मुहूर्त</a>
+        <a href="<?php echo $base_url; ?>/category/puja-vidhi-samagri" class="quick-pill">पूजा विधि और सामग्री</a>
+        <a href="<?php echo $base_url; ?>/category/vedic-panchang" class="quick-pill">वैदिक पंचांग</a>
+      </div>
     </div>
   </section>
 
-  <!-- Automatic Image Slider (10 Genuine Articles Looped) -->
-  <section class="slider-section" aria-label="ट्रेंडिंग लेख स्लाइडर">
+  <!-- Automatic Image Slider (10 Genuine Published Articles Looped) -->
+  <section class="slider-section" aria-label="लोकप्रिय एवं उपयोगी लेख">
+    <div class="container" style="margin-bottom:1rem; display:flex; justify-content:space-between; align-items:flex-end;">
+      <div>
+        <span style="font-size:0.8rem; font-weight:700; color:#FF7000; text-transform:uppercase; letter-spacing:0.05em;">महत्वपूर्ण धार्मिक लेख</span>
+        <h2 style="font-size:1.45rem; font-weight:800; color:#0A1629; margin-top:0.25rem;">लोकप्रिय एवं उपयोगी मार्गदर्शन</h2>
+      </div>
+      <span style="font-size:0.82rem; color:#64748B; display:none;" class="slider-hint">रोकने के लिए कर्सर ले जाएं</span>
+    </div>
+
     <div id="slider-track" class="slider-track">
         <div class="slider-card" onclick="window.location.href='/chhath-puja-samagri-list-prasad-soop-aur-jaruri-samagri';" role="button" tabindex="0" aria-label="Chhath Puja Samagri List छठ पूजा के प्रसाद, सूप और जरूरी सामग्री की सूची">
-          <img src="/uploads/posts/6ad5a0d5c188a.webp" alt="Chhath Puja Samagri List छठ पूजा के प्रसाद, सूप और जरूरी सामग्री की सूची" loading="lazy" decoding="async" width="280" height="360">
+          <img src="/uploads/posts/6ad5a0d5c188a.webp" alt="Chhath Puja Samagri List छठ पूजा के प्रसाद, सूप और जरूरी सामग्री की सूची" fetchpriority="high" decoding="async" width="280" height="360">
           <div class="slider-overlay">
-            <span class="slider-tag"></span>
+            <span class="slider-tag">पूजा विधि और सामग्री</span>
             <h4 class="slider-title">Chhath Puja Samagri List छठ पूजा के प्रसाद, सूप और जरूरी सामग्री की सूची</h4>
           </div>
         </div>
         <div class="slider-card" onclick="window.location.href='/kalash-sthapana-ke-niyam-samagri-nariyal-ki-disha-mantra-vidhi';" role="button" tabindex="0" aria-label="कलश स्थापना के नियम (Kalash Sthapana Ke Niyam) सामग्री, नारियल की दिशा, मंत्र और विधि">
           <img src="/uploads/posts/6ad5a0288b12e.webp" alt="कलश स्थापना के नियम (Kalash Sthapana Ke Niyam) सामग्री, नारियल की दिशा, मंत्र और विधि" loading="lazy" decoding="async" width="280" height="360">
           <div class="slider-overlay">
-            <span class="slider-tag"></span>
+            <span class="slider-tag">पूजा विधि और सामग्री</span>
             <h4 class="slider-title">कलश स्थापना के नियम (Kalash Sthapana Ke Niyam) सामग्री, नारियल की दिशा, मंत्र और विधि</h4>
           </div>
         </div>
         <div class="slider-card" onclick="window.location.href='/panchopachar-puja-vidhi-5-upchar-mantra-dainik-pujan-niyam';" role="button" tabindex="0" aria-label="पंचोपचार पूजा विधि (Panchopachar Puja Vidhi) 5 उपचार, मंत्र और दैनिक पूजन नियम">
           <img src="/uploads/posts/6ad59c1acd917.webp" alt="पंचोपचार पूजा विधि (Panchopachar Puja Vidhi) 5 उपचार, मंत्र और दैनिक पूजन नियम" loading="lazy" decoding="async" width="280" height="360">
           <div class="slider-overlay">
-            <span class="slider-tag"></span>
+            <span class="slider-tag">पूजा विधि और सामग्री</span>
             <h4 class="slider-title">पंचोपचार पूजा विधि (Panchopachar Puja Vidhi) 5 उपचार, मंत्र और दैनिक पूजन नियम</h4>
           </div>
         </div>
         <div class="slider-card" onclick="window.location.href='/rudrabhishek-puja-vidhi-at-home';" role="button" tabindex="0" aria-label="Rudrabhishek Puja Vidhi at Home घर पर रुद्राभिषेक विधि व नियम">
           <img src="/uploads/posts/6ab88baf91bf1.webp" alt="Rudrabhishek Puja Vidhi at Home घर पर रुद्राभिषेक विधि व नियम" loading="lazy" decoding="async" width="280" height="360">
           <div class="slider-overlay">
-            <span class="slider-tag"></span>
+            <span class="slider-tag">पूजा विधि और सामग्री</span>
             <h4 class="slider-title">Rudrabhishek Puja Vidhi at Home घर पर रुद्राभिषेक विधि व नियम</h4>
           </div>
         </div>
         <div class="slider-card" onclick="window.location.href='/sutak-kaal-niyam-aur-samay';" role="button" tabindex="0" aria-label="सूतक काल क्या है? ग्रहण और जन्म-मृत्यु में नियम, समय और वैज्ञानिक दृष्टिकोण">
           <img src="/uploads/posts/6ab88e257077e.webp" alt="सूतक काल क्या है? ग्रहण और जन्म-मृत्यु में नियम, समय और वैज्ञानिक दृष्टिकोण" loading="lazy" decoding="async" width="280" height="360">
           <div class="slider-overlay">
-            <span class="slider-tag"></span>
+            <span class="slider-tag">वैदिक पंचांग</span>
             <h4 class="slider-title">सूतक काल क्या है? ग्रहण और जन्म-मृत्यु में नियम, समय और वैज्ञानिक दृष्टिकोण</h4>
           </div>
         </div>
         <div class="slider-card" onclick="window.location.href='/panchang-ke-five-ang-kya-hain';" role="button" tabindex="0" aria-label="Panchang Ke 5 Ang Kya Hain? तिथि, वार, नक्षत्र, योग और करण को समझने की सरल गाइड">
           <img src="/uploads/posts/6ab890d671730.webp" alt="Panchang Ke 5 Ang Kya Hain? तिथि, वार, नक्षत्र, योग और करण को समझने की सरल गाइड" loading="lazy" decoding="async" width="280" height="360">
           <div class="slider-overlay">
-            <span class="slider-tag"></span>
+            <span class="slider-tag">वैदिक पंचांग</span>
             <h4 class="slider-title">Panchang Ke 5 Ang Kya Hain? तिथि, वार, नक्षत्र, योग और करण को समझने की सरल गाइड</h4>
           </div>
         </div>
         <div class="slider-card" onclick="window.location.href='/sankashti-chaturthi-vrat-vidhi';" role="button" tabindex="0" aria-label="Sankashti Chaturthi Vrat Vidhi संकष्टी चतुर्थी व्रत कैसे रखें? चंद्रोदय समय, कथा और पारण का सही तरीका">
           <img src="/uploads/posts/6ab893bf1b861.webp" alt="Sankashti Chaturthi Vrat Vidhi संकष्टी चतुर्थी व्रत कैसे रखें? चंद्रोदय समय, कथा और पारण का सही तरीका" loading="lazy" decoding="async" width="280" height="360">
           <div class="slider-overlay">
-            <span class="slider-tag"></span>
+            <span class="slider-tag">व्रत और त्योहार</span>
             <h4 class="slider-title">Sankashti Chaturthi Vrat Vidhi संकष्टी चतुर्थी व्रत कैसे रखें? चंद्रोदय समय, कथा और पारण का सही तरीका</h4>
           </div>
         </div>
         <div class="slider-card" onclick="window.location.href='/satyanarayan-katha-puja-samagri-list';" role="button" tabindex="0" aria-label="Satyanarayan Katha Puja Samagri List सत्यनारायण पूजा की सम्पूर्ण सामग्री सूची और घर पर सरल विधि">
           <img src="/uploads/posts/6ab887d42e8c0.webp" alt="Satyanarayan Katha Puja Samagri List सत्यनारायण पूजा की सम्पूर्ण सामग्री सूची और घर पर सरल विधि" loading="lazy" decoding="async" width="280" height="360">
           <div class="slider-overlay">
-            <span class="slider-tag"></span>
+            <span class="slider-tag">पूजा विधि और सामग्री</span>
             <h4 class="slider-title">Satyanarayan Katha Puja Samagri List सत्यनारायण पूजा की सम्पूर्ण सामग्री सूची और घर पर सरल विधि</h4>
           </div>
         </div>
         <div class="slider-card" onclick="window.location.href='/kalashtami-vrat-vidhi-bhairav-puja-samay';" role="button" tabindex="0" aria-label="Kalashtami Vrat Ka Mahatva Aur Vidhi कालाष्टमी व्रत के नियम, भैरव पूजा समय और ध्यान रखने योग्य सावधानियां">
           <img src="/uploads/posts/6ab3e76f4793f.webp" alt="Kalashtami Vrat Ka Mahatva Aur Vidhi कालाष्टमी व्रत के नियम, भैरव पूजा समय और ध्यान रखने योग्य सावधानियां" loading="lazy" decoding="async" width="280" height="360">
           <div class="slider-overlay">
-            <span class="slider-tag"></span>
+            <span class="slider-tag">व्रत और त्योहार</span>
             <h4 class="slider-title">Kalashtami Vrat Ka Mahatva Aur Vidhi कालाष्टमी व्रत के नियम, भैरव पूजा समय और ध्यान रखने योग्य सावधानियां</h4>
           </div>
         </div>
         <div class="slider-card" onclick="window.location.href='/punwasi-hai-kya-purnima-ka-matlab-mahatva';" role="button" tabindex="0" aria-label="Punwasi Hai Kya? पूर्णिमा का मतलब और महत्व">
           <img src="/uploads/posts/6a9cdc9cbbcbb.webp" alt="Punwasi Hai Kya? पूर्णिमा का मतलब और महत्व" loading="lazy" decoding="async" width="280" height="360">
           <div class="slider-overlay">
-            <span class="slider-tag"></span>
+            <span class="slider-tag">व्रत और त्योहार</span>
             <h4 class="slider-title">Punwasi Hai Kya? पूर्णिमा का मतलब और महत्व</h4>
           </div>
         </div>
-        <div class="slider-card" onclick="window.location.href='/chhath-puja-samagri-list-prasad-soop-aur-jaruri-samagri';" role="button" tabindex="0" aria-label="Chhath Puja Samagri List छठ पूजा के प्रसाद, सूप और जरूरी सामग्री की सूची">
+        <div class="slider-card" onclick="window.location.href='/chhath-puja-samagri-list-prasad-soop-aur-jaruri-samagri';" role="button" tabindex="0" aria-label="Chhath Puja Samagri List छठ पूजा के प्रसाद, सूप और जरूरी सामग्री की सूची" aria-hidden="true">
           <img src="/uploads/posts/6ad5a0d5c188a.webp" alt="Chhath Puja Samagri List छठ पूजा के प्रसाद, सूप और जरूरी सामग्री की सूची" loading="lazy" decoding="async" width="280" height="360">
           <div class="slider-overlay">
-            <span class="slider-tag"></span>
+            <span class="slider-tag">पूजा विधि और सामग्री</span>
             <h4 class="slider-title">Chhath Puja Samagri List छठ पूजा के प्रसाद, सूप और जरूरी सामग्री की सूची</h4>
           </div>
         </div>
-        <div class="slider-card" onclick="window.location.href='/kalash-sthapana-ke-niyam-samagri-nariyal-ki-disha-mantra-vidhi';" role="button" tabindex="0" aria-label="कलश स्थापना के नियम (Kalash Sthapana Ke Niyam) सामग्री, नारियल की दिशा, मंत्र और विधि">
+        <div class="slider-card" onclick="window.location.href='/kalash-sthapana-ke-niyam-samagri-nariyal-ki-disha-mantra-vidhi';" role="button" tabindex="0" aria-label="कलश स्थापना के नियम (Kalash Sthapana Ke Niyam) सामग्री, नारियल की दिशा, मंत्र और विधि" aria-hidden="true">
           <img src="/uploads/posts/6ad5a0288b12e.webp" alt="कलश स्थापना के नियम (Kalash Sthapana Ke Niyam) सामग्री, नारियल की दिशा, मंत्र और विधि" loading="lazy" decoding="async" width="280" height="360">
           <div class="slider-overlay">
-            <span class="slider-tag"></span>
+            <span class="slider-tag">पूजा विधि और सामग्री</span>
             <h4 class="slider-title">कलश स्थापना के नियम (Kalash Sthapana Ke Niyam) सामग्री, नारियल की दिशा, मंत्र और विधि</h4>
           </div>
         </div>
-        <div class="slider-card" onclick="window.location.href='/panchopachar-puja-vidhi-5-upchar-mantra-dainik-pujan-niyam';" role="button" tabindex="0" aria-label="पंचोपचार पूजा विधि (Panchopachar Puja Vidhi) 5 उपचार, मंत्र और दैनिक पूजन नियम">
+        <div class="slider-card" onclick="window.location.href='/panchopachar-puja-vidhi-5-upchar-mantra-dainik-pujan-niyam';" role="button" tabindex="0" aria-label="पंचोपचार पूजा विधि (Panchopachar Puja Vidhi) 5 उपचार, मंत्र और दैनिक पूजन नियम" aria-hidden="true">
           <img src="/uploads/posts/6ad59c1acd917.webp" alt="पंचोपचार पूजा विधि (Panchopachar Puja Vidhi) 5 उपचार, मंत्र और दैनिक पूजन नियम" loading="lazy" decoding="async" width="280" height="360">
           <div class="slider-overlay">
-            <span class="slider-tag"></span>
+            <span class="slider-tag">पूजा विधि और सामग्री</span>
             <h4 class="slider-title">पंचोपचार पूजा विधि (Panchopachar Puja Vidhi) 5 उपचार, मंत्र और दैनिक पूजन नियम</h4>
           </div>
         </div>
-        <div class="slider-card" onclick="window.location.href='/rudrabhishek-puja-vidhi-at-home';" role="button" tabindex="0" aria-label="Rudrabhishek Puja Vidhi at Home घर पर रुद्राभिषेक विधि व नियम">
+        <div class="slider-card" onclick="window.location.href='/rudrabhishek-puja-vidhi-at-home';" role="button" tabindex="0" aria-label="Rudrabhishek Puja Vidhi at Home घर पर रुद्राभिषेक विधि व नियम" aria-hidden="true">
           <img src="/uploads/posts/6ab88baf91bf1.webp" alt="Rudrabhishek Puja Vidhi at Home घर पर रुद्राभिषेक विधि व नियम" loading="lazy" decoding="async" width="280" height="360">
           <div class="slider-overlay">
-            <span class="slider-tag"></span>
+            <span class="slider-tag">पूजा विधि और सामग्री</span>
             <h4 class="slider-title">Rudrabhishek Puja Vidhi at Home घर पर रुद्राभिषेक विधि व नियम</h4>
           </div>
         </div>
-        <div class="slider-card" onclick="window.location.href='/sutak-kaal-niyam-aur-samay';" role="button" tabindex="0" aria-label="सूतक काल क्या है? ग्रहण और जन्म-मृत्यु में नियम, समय और वैज्ञानिक दृष्टिकोण">
+        <div class="slider-card" onclick="window.location.href='/sutak-kaal-niyam-aur-samay';" role="button" tabindex="0" aria-label="सूतक काल क्या है? ग्रहण और जन्म-मृत्यु में नियम, समय और वैज्ञानिक दृष्टिकोण" aria-hidden="true">
           <img src="/uploads/posts/6ab88e257077e.webp" alt="सूतक काल क्या है? ग्रहण और जन्म-मृत्यु में नियम, समय और वैज्ञानिक दृष्टिकोण" loading="lazy" decoding="async" width="280" height="360">
           <div class="slider-overlay">
-            <span class="slider-tag"></span>
+            <span class="slider-tag">वैदिक पंचांग</span>
             <h4 class="slider-title">सूतक काल क्या है? ग्रहण और जन्म-मृत्यु में नियम, समय और वैज्ञानिक दृष्टिकोण</h4>
           </div>
         </div>
-        <div class="slider-card" onclick="window.location.href='/panchang-ke-five-ang-kya-hain';" role="button" tabindex="0" aria-label="Panchang Ke 5 Ang Kya Hain? तिथि, वार, नक्षत्र, योग और करण को समझने की सरल गाइड">
+        <div class="slider-card" onclick="window.location.href='/panchang-ke-five-ang-kya-hain';" role="button" tabindex="0" aria-label="Panchang Ke 5 Ang Kya Hain? तिथि, वार, नक्षत्र, योग और करण को समझने की सरल गाइड" aria-hidden="true">
           <img src="/uploads/posts/6ab890d671730.webp" alt="Panchang Ke 5 Ang Kya Hain? तिथि, वार, नक्षत्र, योग और करण को समझने की सरल गाइड" loading="lazy" decoding="async" width="280" height="360">
           <div class="slider-overlay">
-            <span class="slider-tag"></span>
+            <span class="slider-tag">वैदिक पंचांग</span>
             <h4 class="slider-title">Panchang Ke 5 Ang Kya Hain? तिथि, वार, नक्षत्र, योग और करण को समझने की सरल गाइड</h4>
           </div>
         </div>
-        <div class="slider-card" onclick="window.location.href='/sankashti-chaturthi-vrat-vidhi';" role="button" tabindex="0" aria-label="Sankashti Chaturthi Vrat Vidhi संकष्टी चतुर्थी व्रत कैसे रखें? चंद्रोदय समय, कथा और पारण का सही तरीका">
+        <div class="slider-card" onclick="window.location.href='/sankashti-chaturthi-vrat-vidhi';" role="button" tabindex="0" aria-label="Sankashti Chaturthi Vrat Vidhi संकष्टी चतुर्थी व्रत कैसे रखें? चंद्रोदय समय, कथा और पारण का सही तरीका" aria-hidden="true">
           <img src="/uploads/posts/6ab893bf1b861.webp" alt="Sankashti Chaturthi Vrat Vidhi संकष्टी चतुर्थी व्रत कैसे रखें? चंद्रोदय समय, कथा और पारण का सही तरीका" loading="lazy" decoding="async" width="280" height="360">
           <div class="slider-overlay">
-            <span class="slider-tag"></span>
+            <span class="slider-tag">व्रत और त्योहार</span>
             <h4 class="slider-title">Sankashti Chaturthi Vrat Vidhi संकष्टी चतुर्थी व्रत कैसे रखें? चंद्रोदय समय, कथा और पारण का सही तरीका</h4>
           </div>
         </div>
-        <div class="slider-card" onclick="window.location.href='/satyanarayan-katha-puja-samagri-list';" role="button" tabindex="0" aria-label="Satyanarayan Katha Puja Samagri List सत्यनारायण पूजा की सम्पूर्ण सामग्री सूची और घर पर सरल विधि">
+        <div class="slider-card" onclick="window.location.href='/satyanarayan-katha-puja-samagri-list';" role="button" tabindex="0" aria-label="Satyanarayan Katha Puja Samagri List सत्यनारायण पूजा की सम्पूर्ण सामग्री सूची और घर पर सरल विधि" aria-hidden="true">
           <img src="/uploads/posts/6ab887d42e8c0.webp" alt="Satyanarayan Katha Puja Samagri List सत्यनारायण पूजा की सम्पूर्ण सामग्री सूची और घर पर सरल विधि" loading="lazy" decoding="async" width="280" height="360">
           <div class="slider-overlay">
-            <span class="slider-tag"></span>
+            <span class="slider-tag">पूजा विधि और सामग्री</span>
             <h4 class="slider-title">Satyanarayan Katha Puja Samagri List सत्यनारायण पूजा की सम्पूर्ण सामग्री सूची और घर पर सरल विधि</h4>
           </div>
         </div>
-        <div class="slider-card" onclick="window.location.href='/kalashtami-vrat-vidhi-bhairav-puja-samay';" role="button" tabindex="0" aria-label="Kalashtami Vrat Ka Mahatva Aur Vidhi कालाष्टमी व्रत के नियम, भैरव पूजा समय और ध्यान रखने योग्य सावधानियां">
+        <div class="slider-card" onclick="window.location.href='/kalashtami-vrat-vidhi-bhairav-puja-samay';" role="button" tabindex="0" aria-label="Kalashtami Vrat Ka Mahatva Aur Vidhi कालाष्टमी व्रत के नियम, भैरव पूजा समय और ध्यान रखने योग्य सावधानियां" aria-hidden="true">
           <img src="/uploads/posts/6ab3e76f4793f.webp" alt="Kalashtami Vrat Ka Mahatva Aur Vidhi कालाष्टमी व्रत के नियम, भैरव पूजा समय और ध्यान रखने योग्य सावधानियां" loading="lazy" decoding="async" width="280" height="360">
           <div class="slider-overlay">
-            <span class="slider-tag"></span>
+            <span class="slider-tag">व्रत और त्योहार</span>
             <h4 class="slider-title">Kalashtami Vrat Ka Mahatva Aur Vidhi कालाष्टमी व्रत के नियम, भैरव पूजा समय और ध्यान रखने योग्य सावधानियां</h4>
           </div>
         </div>
-        <div class="slider-card" onclick="window.location.href='/punwasi-hai-kya-purnima-ka-matlab-mahatva';" role="button" tabindex="0" aria-label="Punwasi Hai Kya? पूर्णिमा का मतलब और महत्व">
+        <div class="slider-card" onclick="window.location.href='/punwasi-hai-kya-purnima-ka-matlab-mahatva';" role="button" tabindex="0" aria-label="Punwasi Hai Kya? पूर्णिमा का मतलब और महत्व" aria-hidden="true">
           <img src="/uploads/posts/6a9cdc9cbbcbb.webp" alt="Punwasi Hai Kya? पूर्णिमा का मतलब और महत्व" loading="lazy" decoding="async" width="280" height="360">
           <div class="slider-overlay">
-            <span class="slider-tag"></span>
+            <span class="slider-tag">व्रत और त्योहार</span>
             <h4 class="slider-title">Punwasi Hai Kya? पूर्णिमा का मतलब और महत्व</h4>
           </div>
         </div>
     </div>
   </section>
 
-  <!-- Choghadiya & Panchang Tool -->
-  <section id="choghadiya-section" class="container" style="margin-top:2rem;">
-    <div class="tool-card">
-      <div class="tool-header">
-        <div>
-          <span style="background:var(--accent-orange); color:#fff; font-size:10px; font-weight:800; text-transform:uppercase; padding:2px 8px; border-radius:9999px;">
-            दैनिक पंचांग व चौघड़िया
-          </span>
-          <h2 style="margin-top:0.35rem; font-size:1.5rem; font-weight:800;">आज का चौघड़िया मुहूर्त</h2>
-          <p style="color:#CBD5E1; font-size:0.85rem; margin-top:0.25rem;">
-            स्थानीय सूर्योदय-सूर्यास्त आधारित वास्तविक गणना। अमृत, शुभ व लाभ मुहूर्त में किए गए कार्य फलदायी होते हैं।
-          </p>
-        </div>
-        <div class="tool-controls">
-          <select id="city-select" class="tool-select" onchange="window.handleCityChange(this.value);" aria-label="स्थान चुनें">
-            <option value="delhi">नई दिल्ली (New Delhi)</option>
-            <option value="mumbai">मुंबई (Mumbai)</option>
-            <option value="varanasi">वाराणसी (Varanasi)</option>
-            <option value="jaipur">जयपुर (Jaipur)</option>
-            <option value="kolkata">कोलकाता (Kolkata)</option>
-            <option value="bengaluru">बेंगलुरु (Bengaluru)</option>
-            <option value="ahmedabad">अहमदाबाद (Ahmedabad)</option>
-            <option value="patna">पटना (Patna)</option>
-            <option value="lucknow">लखनऊ (Lucknow)</option>
-            <option value="pune">पुणे (Pune)</option>
-            <option value="ayodhya">अयोध्या (Ayodhya)</option>
-            <option value="ujjain">उज्जैन (Ujjain)</option>
-            <option value="haridwar">हरिद्वार (Haridwar)</option>
-          </select>
-          <input type="date" id="date-select" class="tool-select" onchange="window.handleDateChange(this.value);" aria-label="तारीख चुनें">
-        </div>
-      </div>
-
-      <!-- Day / Night Tabs -->
-      <div class="tool-tabs">
-        <button id="tab-day" class="tool-tab-btn active" onclick="window.switchTab('day');">☀️ दिन का चौघड़िया (Day Choghadiya)</button>
-        <button id="tab-night" class="tool-tab-btn" onclick="window.switchTab('night');">🌙 रात का चौघड़िया (Night Choghadiya)</button>
-      </div>
-
-      <!-- Active Period Summary Banner -->
-      <div id="active-slot-banner" style="background:#FFF3EB; border-bottom:1px solid #FED7AA; padding:0.85rem 1.5rem; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:0.5rem;">
-        <div style="display:flex; align-items:center; gap:0.5rem;">
-          <span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#10B981;"></span>
-          <span style="font-size:0.85rem; font-weight:700; color:#0A1629;">वर्तमान चौघड़िया मुहूर्त:</span>
-          <strong id="current-slot-name" style="font-size:0.95rem; color:#D95D00;">शुभ</strong>
-          <span id="current-slot-time" style="font-size:0.82rem; color:#64748B;">(चालू समय)</span>
-        </div>
-        <div style="font-size:0.82rem; color:#475569;">
-          सूर्योदय: <strong id="sunrise-display" style="color:#0A1629;">06:38 AM</strong> | सूर्यास्त: <strong id="sunset-display" style="color:#0A1629;">05:32 PM</strong>
-        </div>
-      </div>
-
-      <!-- Choghadiya Timings Table -->
-      <div style="overflow-x:auto;">
-        <table class="choghadiya-table">
-          <thead>
-            <tr>
-              <th>मुहूर्त नाम</th>
-              <th>प्रारंभ समय</th>
-              <th>समाप्ति समय</th>
-              <th>प्रकृति</th>
-              <th>स्वामी ग्रह</th>
-              <th>उपयुक्त कार्य</th>
-            </tr>
-          </thead>
-          <tbody id="choghadiya-tbody">
-            <!-- Populated by choghadiya-engine.js -->
-          </tbody>
-        </table>
-      </div>
-
-      <!-- Important Timings Strip -->
-      <div style="background:#F8FAFC; border-top:1px solid var(--border-soft); padding:1.25rem 1.5rem;">
-        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:1rem;">
-          <div style="background:#fff; border:1px solid #FECDD3; padding:0.85rem; border-radius:14px;">
-            <span style="font-size:10px; font-weight:800; color:#BE123C; text-transform:uppercase;">राहुकाल (अशुभ)</span>
-            <div id="rahu-display" style="font-size:0.95rem; font-weight:800; color:#0A1629; margin-top:2px;">10:30 AM से 12:00 PM</div>
-            <span style="font-size:10px; color:#64748B;">शुभ कार्य न करें</span>
-          </div>
-          <div style="background:#fff; border:1px solid #A7F3D0; padding:0.85rem; border-radius:14px;">
-            <span style="font-size:10px; font-weight:800; color:#047857; text-transform:uppercase;">अभिजित मुहूर्त</span>
-            <div id="abhijit-display" style="font-size:0.95rem; font-weight:800; color:#0A1629; margin-top:2px;">11:42 AM से 12:35 PM</div>
-            <span style="font-size:10px; color:#047857;">सर्वकार्य सिद्धि</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 30 Genuine Published Articles Grid -->
+  <!-- 30 Genuine Published Articles Grid with Category Filtering & Pagination -->
   <section id="articles-section" class="container" style="margin-top:3.5rem;">
-    <div class="category-filter-bar">
-      <button class="category-filter-btn active" onclick="window.setCategory('all', this)">सभी लेख (All)</button>
-      <button class="category-filter-btn" onclick="window.setCategory('choghadiya', this)">आज का चौघड़िया</button>
-      <button class="category-filter-btn" onclick="window.setCategory('muhurat', this)">शुभ मुहूर्त 2026</button>
-      <button class="category-filter-btn" onclick="window.setCategory('vrat', this)">व्रत और त्योहार</button>
-      <button class="category-filter-btn" onclick="window.setCategory('puja', this)">पूजा विधि व सामग्री</button>
-      <button class="category-filter-btn" onclick="window.setCategory('panchang', this)">दैनिक पंचांग</button>
+    <div style="display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:1rem; margin-bottom:1.5rem;">
+      <div>
+        <span style="font-size:0.8rem; font-weight:700; color:#FF7000; text-transform:uppercase; letter-spacing:0.05em;">प्रमाणित अध्ययन</span>
+        <h2 style="font-size:1.65rem; font-weight:800; color:#0A1629; margin-top:0.25rem;">नवीनतम प्रकाशित लेख</h2>
+      </div>
+      <div style="font-size:0.88rem; color:#64748B;">
+        कुल <strong style="color:#0A1629;">30</strong> प्रामाणिक धार्मिक लेख
+      </div>
     </div>
 
+    <!-- Category Filter Bar (Real Categories) -->
+    <div class="category-filter-bar" role="tablist" aria-label="श्रेणी फिल्टर">
+      <button class="category-filter-btn active" onclick="window.setCategory('all', this)" role="tab" aria-selected="true">सभी (All)</button>
+      <button class="category-filter-btn" onclick="window.setCategory('vrat-tyohar', this)" role="tab" aria-selected="false">व्रत और त्योहार</button>
+      <button class="category-filter-btn" onclick="window.setCategory('shubh-muhurat-guide', this)" role="tab" aria-selected="false">शुभ मुहूर्त</button>
+      <button class="category-filter-btn" onclick="window.setCategory('puja-vidhi-samagri', this)" role="tab" aria-selected="false">पूजा विधि और सामग्री</button>
+      <button class="category-filter-btn" onclick="window.setCategory('vedic-panchang', this)" role="tab" aria-selected="false">वैदिक पंचांग</button>
+    </div>
+
+    <!-- Dynamic 30 Articles Grid -->
     <div id="articles-grid" class="articles-grid">
-      <article class="article-card" data-category="choghadiya">
+      <article class="article-card" data-category="puja-vidhi-samagri">
         <a href="/chhath-puja-samagri-list-prasad-soop-aur-jaruri-samagri" class="article-thumb-link" aria-label="Chhath Puja Samagri List छठ पूजा के प्रसाद, सूप और जरूरी सामग्री की सूची">
           <img src="/uploads/posts/6ad5a0d5c188a.webp" alt="Chhath Puja Samagri List छठ पूजा के प्रसाद, सूप और जरूरी सामग्री की सूची" class="article-thumb" loading="lazy" decoding="async" width="400" height="225">
         </a>
         <div class="article-body">
-          <span class="category-badge"></span>
+          <span class="category-badge">पूजा विधि और सामग्री</span>
           <h3 class="article-title">
             <a href="/chhath-puja-samagri-list-prasad-soop-aur-jaruri-samagri">Chhath Puja Samagri List छठ पूजा के प्रसाद, सूप और जरूरी सामग्री की सूची</a>
           </h3>
@@ -394,12 +256,12 @@ if (file_exists(__DIR__ . '/../includes/header_responsive.php')) {
           </div>
         </div>
       </article>
-      <article class="article-card" data-category="choghadiya">
+      <article class="article-card" data-category="puja-vidhi-samagri">
         <a href="/kalash-sthapana-ke-niyam-samagri-nariyal-ki-disha-mantra-vidhi" class="article-thumb-link" aria-label="कलश स्थापना के नियम (Kalash Sthapana Ke Niyam) सामग्री, नारियल की दिशा, मंत्र और विधि">
           <img src="/uploads/posts/6ad5a0288b12e.webp" alt="कलश स्थापना के नियम (Kalash Sthapana Ke Niyam) सामग्री, नारियल की दिशा, मंत्र और विधि" class="article-thumb" loading="lazy" decoding="async" width="400" height="225">
         </a>
         <div class="article-body">
-          <span class="category-badge"></span>
+          <span class="category-badge">पूजा विधि और सामग्री</span>
           <h3 class="article-title">
             <a href="/kalash-sthapana-ke-niyam-samagri-nariyal-ki-disha-mantra-vidhi">कलश स्थापना के नियम (Kalash Sthapana Ke Niyam) सामग्री, नारियल की दिशा, मंत्र और विधि</a>
           </h3>
@@ -410,12 +272,12 @@ if (file_exists(__DIR__ . '/../includes/header_responsive.php')) {
           </div>
         </div>
       </article>
-      <article class="article-card" data-category="choghadiya">
+      <article class="article-card" data-category="puja-vidhi-samagri">
         <a href="/panchopachar-puja-vidhi-5-upchar-mantra-dainik-pujan-niyam" class="article-thumb-link" aria-label="पंचोपचार पूजा विधि (Panchopachar Puja Vidhi) 5 उपचार, मंत्र और दैनिक पूजन नियम">
           <img src="/uploads/posts/6ad59c1acd917.webp" alt="पंचोपचार पूजा विधि (Panchopachar Puja Vidhi) 5 उपचार, मंत्र और दैनिक पूजन नियम" class="article-thumb" loading="lazy" decoding="async" width="400" height="225">
         </a>
         <div class="article-body">
-          <span class="category-badge"></span>
+          <span class="category-badge">पूजा विधि और सामग्री</span>
           <h3 class="article-title">
             <a href="/panchopachar-puja-vidhi-5-upchar-mantra-dainik-pujan-niyam">पंचोपचार पूजा विधि (Panchopachar Puja Vidhi) 5 उपचार, मंत्र और दैनिक पूजन नियम</a>
           </h3>
@@ -426,12 +288,12 @@ if (file_exists(__DIR__ . '/../includes/header_responsive.php')) {
           </div>
         </div>
       </article>
-      <article class="article-card" data-category="choghadiya">
+      <article class="article-card" data-category="puja-vidhi-samagri">
         <a href="/rudrabhishek-puja-vidhi-at-home" class="article-thumb-link" aria-label="Rudrabhishek Puja Vidhi at Home घर पर रुद्राभिषेक विधि व नियम">
           <img src="/uploads/posts/6ab88baf91bf1.webp" alt="Rudrabhishek Puja Vidhi at Home घर पर रुद्राभिषेक विधि व नियम" class="article-thumb" loading="lazy" decoding="async" width="400" height="225">
         </a>
         <div class="article-body">
-          <span class="category-badge"></span>
+          <span class="category-badge">पूजा विधि और सामग्री</span>
           <h3 class="article-title">
             <a href="/rudrabhishek-puja-vidhi-at-home">Rudrabhishek Puja Vidhi at Home घर पर रुद्राभिषेक विधि व नियम</a>
           </h3>
@@ -442,12 +304,12 @@ if (file_exists(__DIR__ . '/../includes/header_responsive.php')) {
           </div>
         </div>
       </article>
-      <article class="article-card" data-category="choghadiya">
+      <article class="article-card" data-category="vedic-panchang">
         <a href="/sutak-kaal-niyam-aur-samay" class="article-thumb-link" aria-label="सूतक काल क्या है? ग्रहण और जन्म-मृत्यु में नियम, समय और वैज्ञानिक दृष्टिकोण">
           <img src="/uploads/posts/6ab88e257077e.webp" alt="सूतक काल क्या है? ग्रहण और जन्म-मृत्यु में नियम, समय और वैज्ञानिक दृष्टिकोण" class="article-thumb" loading="lazy" decoding="async" width="400" height="225">
         </a>
         <div class="article-body">
-          <span class="category-badge"></span>
+          <span class="category-badge">वैदिक पंचांग</span>
           <h3 class="article-title">
             <a href="/sutak-kaal-niyam-aur-samay">सूतक काल क्या है? ग्रहण और जन्म-मृत्यु में नियम, समय और वैज्ञानिक दृष्टिकोण</a>
           </h3>
@@ -458,12 +320,12 @@ if (file_exists(__DIR__ . '/../includes/header_responsive.php')) {
           </div>
         </div>
       </article>
-      <article class="article-card" data-category="choghadiya">
+      <article class="article-card" data-category="vedic-panchang">
         <a href="/panchang-ke-five-ang-kya-hain" class="article-thumb-link" aria-label="Panchang Ke 5 Ang Kya Hain? तिथि, वार, नक्षत्र, योग और करण को समझने की सरल गाइड">
           <img src="/uploads/posts/6ab890d671730.webp" alt="Panchang Ke 5 Ang Kya Hain? तिथि, वार, नक्षत्र, योग और करण को समझने की सरल गाइड" class="article-thumb" loading="lazy" decoding="async" width="400" height="225">
         </a>
         <div class="article-body">
-          <span class="category-badge"></span>
+          <span class="category-badge">वैदिक पंचांग</span>
           <h3 class="article-title">
             <a href="/panchang-ke-five-ang-kya-hain">Panchang Ke 5 Ang Kya Hain? तिथि, वार, नक्षत्र, योग और करण को समझने की सरल गाइड</a>
           </h3>
@@ -474,12 +336,12 @@ if (file_exists(__DIR__ . '/../includes/header_responsive.php')) {
           </div>
         </div>
       </article>
-      <article class="article-card" data-category="choghadiya">
+      <article class="article-card" data-category="vrat-tyohar">
         <a href="/sankashti-chaturthi-vrat-vidhi" class="article-thumb-link" aria-label="Sankashti Chaturthi Vrat Vidhi संकष्टी चतुर्थी व्रत कैसे रखें? चंद्रोदय समय, कथा और पारण का सही तरीका">
           <img src="/uploads/posts/6ab893bf1b861.webp" alt="Sankashti Chaturthi Vrat Vidhi संकष्टी चतुर्थी व्रत कैसे रखें? चंद्रोदय समय, कथा और पारण का सही तरीका" class="article-thumb" loading="lazy" decoding="async" width="400" height="225">
         </a>
         <div class="article-body">
-          <span class="category-badge"></span>
+          <span class="category-badge">व्रत और त्योहार</span>
           <h3 class="article-title">
             <a href="/sankashti-chaturthi-vrat-vidhi">Sankashti Chaturthi Vrat Vidhi संकष्टी चतुर्थी व्रत कैसे रखें? चंद्रोदय समय, कथा और पारण का सही तरीका</a>
           </h3>
@@ -490,12 +352,12 @@ if (file_exists(__DIR__ . '/../includes/header_responsive.php')) {
           </div>
         </div>
       </article>
-      <article class="article-card" data-category="choghadiya">
+      <article class="article-card" data-category="puja-vidhi-samagri">
         <a href="/satyanarayan-katha-puja-samagri-list" class="article-thumb-link" aria-label="Satyanarayan Katha Puja Samagri List सत्यनारायण पूजा की सम्पूर्ण सामग्री सूची और घर पर सरल विधि">
           <img src="/uploads/posts/6ab887d42e8c0.webp" alt="Satyanarayan Katha Puja Samagri List सत्यनारायण पूजा की सम्पूर्ण सामग्री सूची और घर पर सरल विधि" class="article-thumb" loading="lazy" decoding="async" width="400" height="225">
         </a>
         <div class="article-body">
-          <span class="category-badge"></span>
+          <span class="category-badge">पूजा विधि और सामग्री</span>
           <h3 class="article-title">
             <a href="/satyanarayan-katha-puja-samagri-list">Satyanarayan Katha Puja Samagri List सत्यनारायण पूजा की सम्पूर्ण सामग्री सूची और घर पर सरल विधि</a>
           </h3>
@@ -506,12 +368,12 @@ if (file_exists(__DIR__ . '/../includes/header_responsive.php')) {
           </div>
         </div>
       </article>
-      <article class="article-card" data-category="choghadiya">
+      <article class="article-card" data-category="vrat-tyohar">
         <a href="/kalashtami-vrat-vidhi-bhairav-puja-samay" class="article-thumb-link" aria-label="Kalashtami Vrat Ka Mahatva Aur Vidhi कालाष्टमी व्रत के नियम, भैरव पूजा समय और ध्यान रखने योग्य सावधानियां">
           <img src="/uploads/posts/6ab3e76f4793f.webp" alt="Kalashtami Vrat Ka Mahatva Aur Vidhi कालाष्टमी व्रत के नियम, भैरव पूजा समय और ध्यान रखने योग्य सावधानियां" class="article-thumb" loading="lazy" decoding="async" width="400" height="225">
         </a>
         <div class="article-body">
-          <span class="category-badge"></span>
+          <span class="category-badge">व्रत और त्योहार</span>
           <h3 class="article-title">
             <a href="/kalashtami-vrat-vidhi-bhairav-puja-samay">Kalashtami Vrat Ka Mahatva Aur Vidhi कालाष्टमी व्रत के नियम, भैरव पूजा समय और ध्यान रखने योग्य सावधानियां</a>
           </h3>
@@ -522,12 +384,12 @@ if (file_exists(__DIR__ . '/../includes/header_responsive.php')) {
           </div>
         </div>
       </article>
-      <article class="article-card" data-category="choghadiya">
+      <article class="article-card" data-category="vrat-tyohar">
         <a href="/punwasi-hai-kya-purnima-ka-matlab-mahatva" class="article-thumb-link" aria-label="Punwasi Hai Kya? पूर्णिमा का मतलब और महत्व">
           <img src="/uploads/posts/6a9cdc9cbbcbb.webp" alt="Punwasi Hai Kya? पूर्णिमा का मतलब और महत्व" class="article-thumb" loading="lazy" decoding="async" width="400" height="225">
         </a>
         <div class="article-body">
-          <span class="category-badge"></span>
+          <span class="category-badge">व्रत और त्योहार</span>
           <h3 class="article-title">
             <a href="/punwasi-hai-kya-purnima-ka-matlab-mahatva">Punwasi Hai Kya? पूर्णिमा का मतलब और महत्व</a>
           </h3>
@@ -538,12 +400,12 @@ if (file_exists(__DIR__ . '/../includes/header_responsive.php')) {
           </div>
         </div>
       </article>
-      <article class="article-card" data-category="choghadiya">
+      <article class="article-card" data-category="vrat-tyohar">
         <a href="/ahoi-ashtami-kab-hai" class="article-thumb-link" aria-label="Ahoi Ashtami Kab Hai? तिथि, मुहूर्त और विधि">
           <img src="/uploads/posts/6a9eb0a05c162.webp" alt="Ahoi Ashtami Kab Hai? तिथि, मुहूर्त और विधि" class="article-thumb" loading="lazy" decoding="async" width="400" height="225">
         </a>
         <div class="article-body">
-          <span class="category-badge"></span>
+          <span class="category-badge">व्रत और त्योहार</span>
           <h3 class="article-title">
             <a href="/ahoi-ashtami-kab-hai">Ahoi Ashtami Kab Hai? तिथि, मुहूर्त और विधि</a>
           </h3>
@@ -554,12 +416,12 @@ if (file_exists(__DIR__ . '/../includes/header_responsive.php')) {
           </div>
         </div>
       </article>
-      <article class="article-card" data-category="choghadiya">
+      <article class="article-card" data-category="puja-vidhi-samagri">
         <a href="/ganesh-visarjan-kab-hai" class="article-thumb-link" aria-label="Ganesh Visarjan Kab Hai? 2026 की तारीख़ें, विधि और शुभ समय">
           <img src="/uploads/posts/6a9eaad70fd6a.webp" alt="Ganesh Visarjan Kab Hai? 2026 की तारीख़ें, विधि और शुभ समय" class="article-thumb" loading="lazy" decoding="async" width="400" height="225">
         </a>
         <div class="article-body">
-          <span class="category-badge"></span>
+          <span class="category-badge">पूजा विधि और सामग्री</span>
           <h3 class="article-title">
             <a href="/ganesh-visarjan-kab-hai">Ganesh Visarjan Kab Hai? 2026 की तारीख़ें, विधि और शुभ समय</a>
           </h3>
@@ -570,436 +432,50 @@ if (file_exists(__DIR__ . '/../includes/header_responsive.php')) {
           </div>
         </div>
       </article>
-      <article class="article-card" data-category="choghadiya">
-        <a href="/karwa-chauth-kab-hai" class="article-thumb-link" aria-label="Karwa Chauth Kab Hai? व्रत की तारीख, पूजा विधि और मुहूर्त">
-          <img src="/uploads/posts/6a9ea40bc0406.webp" alt="Karwa Chauth Kab Hai? व्रत की तारीख, पूजा विधि और मुहूर्त" class="article-thumb" loading="lazy" decoding="async" width="400" height="225">
-        </a>
-        <div class="article-body">
-          <span class="category-badge"></span>
-          <h3 class="article-title">
-            <a href="/karwa-chauth-kab-hai">Karwa Chauth Kab Hai? व्रत की तारीख, पूजा विधि और मुहूर्त</a>
-          </h3>
-          <p class="article-excerpt">Karwa Chauth Kab Hai,  जानिए सही तारीख, पूजा मुहूर्त, चांद निकलने का समय, सरगी, पूजा सामग्री और पूजा विधि की पूरी और सटीक जानकारी।</p>
-          <div class="article-footer">
-            <span class="article-meta">Shiv Kumar Pandit · Nov 5, 2026</span>
-            <a href="/karwa-chauth-kab-hai" class="read-more-link" aria-label="Karwa Chauth Kab Hai? व्रत की तारीख, पूजा विधि और मुहूर्त पढ़ें">पूरा पढ़ें →</a>
-          </div>
-        </div>
-      </article>
-      <article class="article-card" data-category="choghadiya">
-        <a href="/anant-chaturdashi-kab-hai" class="article-thumb-link" aria-label="Anant Chaturdashi Kab Hai? तारीख, पूजा विधि और महत्व">
-          <img src="/uploads/posts/6a9ea8798c160.webp" alt="Anant Chaturdashi Kab Hai? तारीख, पूजा विधि और महत्व" class="article-thumb" loading="lazy" decoding="async" width="400" height="225">
-        </a>
-        <div class="article-body">
-          <span class="category-badge"></span>
-          <h3 class="article-title">
-            <a href="/anant-chaturdashi-kab-hai">Anant Chaturdashi Kab Hai? तारीख, पूजा विधि और महत्व</a>
-          </h3>
-          <p class="article-excerpt">Anant Chaturdashi Kab Hai,  सही तारीख, चतुर्दशी तिथि, पूजा मुहूर्त, अनंत सूत्र की 14 गांठों का अर्थ और घर पर पूजा विधि जानें, सरल भाषा में।</p>
-          <div class="article-footer">
-            <span class="article-meta">Shiv Kumar Pandit · Nov 5, 2026</span>
-            <a href="/anant-chaturdashi-kab-hai" class="read-more-link" aria-label="Anant Chaturdashi Kab Hai? तारीख, पूजा विधि और महत्व पढ़ें">पूरा पढ़ें →</a>
-          </div>
-        </div>
-      </article>
-      <article class="article-card" data-category="choghadiya">
-        <a href="/itiya-vrat-kab-hai" class="article-thumb-link" aria-label="itiya Vrat Kab Hai? तारीख, विधि और महत्व">
-          <img src="/uploads/posts/6a9ea08aca93f.webp" alt="itiya Vrat Kab Hai? तारीख, विधि और महत्व" class="article-thumb" loading="lazy" decoding="async" width="400" height="225">
-        </a>
-        <div class="article-body">
-          <span class="category-badge"></span>
-          <h3 class="article-title">
-            <a href="/itiya-vrat-kab-hai">itiya Vrat Kab Hai? तारीख, विधि और महत्व</a>
-          </h3>
-          <p class="article-excerpt">itiya Vrat Kab Hai, इसे लेकर अलग-अलग पंचांग में अलग तारीख बताई जा रही है। पढ़ें अष्टमी तिथि, नहाय-खाय, पारण और पूजा विधि की साफ, सटीक जानकार...</p>
-          <div class="article-footer">
-            <span class="article-meta">Shiv Kumar Pandit · Nov 5, 2026</span>
-            <a href="/itiya-vrat-kab-hai" class="read-more-link" aria-label="itiya Vrat Kab Hai? तारीख, विधि और महत्व पढ़ें">पूरा पढ़ें →</a>
-          </div>
-        </div>
-      </article>
-      <article class="article-card" data-category="choghadiya">
-        <a href="/vat-savitri-puja-vidhi" class="article-thumb-link" aria-label="Vat Savitri Puja Vidhi पूजा विधि, सामग्री और महत्व">
-          <img src="/uploads/posts/6a9e9fa59341f.webp" alt="Vat Savitri Puja Vidhi पूजा विधि, सामग्री और महत्व" class="article-thumb" loading="lazy" decoding="async" width="400" height="225">
-        </a>
-        <div class="article-body">
-          <span class="category-badge"></span>
-          <h3 class="article-title">
-            <a href="/vat-savitri-puja-vidhi">Vat Savitri Puja Vidhi पूजा विधि, सामग्री और महत्व</a>
-          </h3>
-          <p class="article-excerpt">Vat Savitri Puja Vidhi जानें आसान भाषा में — सही सामग्री, चरण-दर-चरण पूजा विधि, कथा और क्षेत्रीय परंपराओं की सच्ची जानकारी एक ही जगह।</p>
-          <div class="article-footer">
-            <span class="article-meta">Shiv Kumar Pandit · Nov 5, 2026</span>
-            <a href="/vat-savitri-puja-vidhi" class="read-more-link" aria-label="Vat Savitri Puja Vidhi पूजा विधि, सामग्री और महत्व पढ़ें">पूरा पढ़ें →</a>
-          </div>
-        </div>
-      </article>
-      <article class="article-card" data-category="choghadiya">
-        <a href="/hartalika-teej-puja-muhurat" class="article-thumb-link" aria-label="Hartalika Teej Puja Muhurat 2027 पूजा का समय, विधि, सामग्री और व्रत नियम">
-          <img src="/uploads/posts/6a9e9ac0b0853.webp" alt="Hartalika Teej Puja Muhurat 2027 पूजा का समय, विधि, सामग्री और व्रत नियम" class="article-thumb" loading="lazy" decoding="async" width="400" height="225">
-        </a>
-        <div class="article-body">
-          <span class="category-badge"></span>
-          <h3 class="article-title">
-            <a href="/hartalika-teej-puja-muhurat">Hartalika Teej Puja Muhurat 2027 पूजा का समय, विधि, सामग्री और व्रत नियम</a>
-          </h3>
-          <p class="article-excerpt">हरतालिका तीज 2027 कब है, पूजा का मुहूर्त क्या है और विधि क्या है? सामग्री, कथा, पारण और सेहत से जुड़ी सावधानियाँ सरल हिंदी में।</p>
-          <div class="article-footer">
-            <span class="article-meta">Shiv Kumar Pandit · Nov 5, 2026</span>
-            <a href="/hartalika-teej-puja-muhurat" class="read-more-link" aria-label="Hartalika Teej Puja Muhurat 2027 पूजा का समय, विधि, सामग्री और व्रत नियम पढ़ें">पूरा पढ़ें →</a>
-          </div>
-        </div>
-      </article>
-      <article class="article-card" data-category="choghadiya">
-        <a href="/trayodashi-kab-hai" class="article-thumb-link" aria-label="Trayodashi Kab Hai? तारीख, पूजा विधि और महत्व">
-          <img src="/uploads/posts/6a9ea5930bf25.webp" alt="Trayodashi Kab Hai? तारीख, पूजा विधि और महत्व" class="article-thumb" loading="lazy" decoding="async" width="400" height="225">
-        </a>
-        <div class="article-body">
-          <span class="category-badge"></span>
-          <h3 class="article-title">
-            <a href="/trayodashi-kab-hai">Trayodashi Kab Hai? तारीख, पूजा विधि और महत्व</a>
-          </h3>
-          <p class="article-excerpt">Trayodashi Kab Hai, सितंबर 2026 में त्रयोदशी कब है, यह जानिए सही तारीख, प्रदोष काल के समय और पूजा विधि के साथ। पूरी जानकारी सरल हिंदी में।</p>
-          <div class="article-footer">
-            <span class="article-meta">Shiv Kumar Pandit · Nov 5, 2026</span>
-            <a href="/trayodashi-kab-hai" class="read-more-link" aria-label="Trayodashi Kab Hai? तारीख, पूजा विधि और महत्व पढ़ें">पूरा पढ़ें →</a>
-          </div>
-        </div>
-      </article>
-      <article class="article-card" data-category="choghadiya">
-        <a href="/mavas-kab-hai" class="article-thumb-link" aria-label="Mavas Kab Hai? सितंबर अमावस्या तारीख व महत्व">
-          <img src="/uploads/posts/6a9eac1a64186.webp" alt="Mavas Kab Hai? सितंबर अमावस्या तारीख व महत्व" class="article-thumb" loading="lazy" decoding="async" width="400" height="225">
-        </a>
-        <div class="article-body">
-          <span class="category-badge"></span>
-          <h3 class="article-title">
-            <a href="/mavas-kab-hai">Mavas Kab Hai? सितंबर अमावस्या तारीख व महत्व</a>
-          </h3>
-          <p class="article-excerpt">सितंबर 2026 की भाद्रपद अमावस्या 10 और 11 सितंबर, दोनों दिन क्यों बताई गई? तिथि का समय, स्नान-दान की तारीख, पिठोरी और कुशोत्पाटिनी का अर्थ, औ...</p>
-          <div class="article-footer">
-            <span class="article-meta">Shiv Kumar Pandit · Nov 5, 2026</span>
-            <a href="/mavas-kab-hai" class="read-more-link" aria-label="Mavas Kab Hai? सितंबर अमावस्या तारीख व महत्व पढ़ें">पूरा पढ़ें →</a>
-          </div>
-        </div>
-      </article>
-      <article class="article-card" data-category="choghadiya">
-        <a href="/nag-panchami-kya-hai" class="article-thumb-link" aria-label="Nag Panchami Kya Hai? जानें पूजा विधि, महत्व और कथा">
-          <img src="/uploads/posts/6a9cd8d5978fa.webp" alt="Nag Panchami Kya Hai? जानें पूजा विधि, महत्व और कथा" class="article-thumb" loading="lazy" decoding="async" width="400" height="225">
-        </a>
-        <div class="article-body">
-          <span class="category-badge"></span>
-          <h3 class="article-title">
-            <a href="/nag-panchami-kya-hai">Nag Panchami Kya Hai? जानें पूजा विधि, महत्व और कथा</a>
-          </h3>
-          <p class="article-excerpt">Nag Panchami Kya Hai, यह जानिए सरल भाषा में। पूजा विधि, महत्व, पौराणिक कथा और जरूरी सावधानियां—सब कुछ एक ही जगह पढ़ें।</p>
-          <div class="article-footer">
-            <span class="article-meta">Shiv Kumar Pandit · Nov 5, 2026</span>
-            <a href="/nag-panchami-kya-hai" class="read-more-link" aria-label="Nag Panchami Kya Hai? जानें पूजा विधि, महत्व और कथा पढ़ें">पूरा पढ़ें →</a>
-          </div>
-        </div>
-      </article>
-      <article class="article-card" data-category="choghadiya">
-        <a href="/somvati-amavasya-kya-hai" class="article-thumb-link" aria-label="Somvati Amavasya Kya Hai? जानें इसका महत्व, पूजा विधि और शुभ मुहूर्त">
-          <img src="/uploads/posts/6a9ae1dd23fc2.webp" alt="Somvati Amavasya Kya Hai? जानें इसका महत्व, पूजा विधि और शुभ मुहूर्त" class="article-thumb" loading="lazy" decoding="async" width="400" height="225">
-        </a>
-        <div class="article-body">
-          <span class="category-badge"></span>
-          <h3 class="article-title">
-            <a href="/somvati-amavasya-kya-hai">Somvati Amavasya Kya Hai? जानें इसका महत्व, पूजा विधि और शुभ मुहूर्त</a>
-          </h3>
-          <p class="article-excerpt">Somvati Amavasya Kya Hai जानिए इस लेख में - इसका महत्व, सही पूजा विधि, शुभ मुहूर्त और वो बातें जो हर भक्त को इस दिन ध्यान में रखनी चाहिए।</p>
-          <div class="article-footer">
-            <span class="article-meta">Shiv Kumar Pandit · Nov 5, 2026</span>
-            <a href="/somvati-amavasya-kya-hai" class="read-more-link" aria-label="Somvati Amavasya Kya Hai? जानें इसका महत्व, पूजा विधि और शुभ मुहूर्त पढ़ें">पूरा पढ़ें →</a>
-          </div>
-        </div>
-      </article>
-      <article class="article-card" data-category="choghadiya">
-        <a href="/nirjala-gyaras-kab-ki-hai" class="article-thumb-link" aria-label="irjala Gyaras Kab Ki Hai (2026-2027) सही तारीख, पारण समय और व्रत नियम">
-          <img src="/uploads/posts/6a277c659dc89.webp" alt="irjala Gyaras Kab Ki Hai (2026-2027) सही तारीख, पारण समय और व्रत नियम" class="article-thumb" loading="lazy" decoding="async" width="400" height="225">
-        </a>
-        <div class="article-body">
-          <span class="category-badge"></span>
-          <h3 class="article-title">
-            <a href="/nirjala-gyaras-kab-ki-hai">irjala Gyaras Kab Ki Hai (2026-2027) सही तारीख, पारण समय और व्रत नियम</a>
-          </h3>
-          <p class="article-excerpt">जानें Nirjala Gyaras Kab Ki Hai: वर्ष 2026 (25 जून) और 2027 (14-15 जून) की पंचांग तिथि, पारण का सही समय, महाद्वादशी का अंतर, भीमसेनी एकादशी ...</p>
-          <div class="article-footer">
-            <span class="article-meta">Shiv Kumar Pandit · Nov 5, 2026</span>
-            <a href="/nirjala-gyaras-kab-ki-hai" class="read-more-link" aria-label="irjala Gyaras Kab Ki Hai (2026-2027) सही तारीख, पारण समय और व्रत नियम पढ़ें">पूरा पढ़ें →</a>
-          </div>
-        </div>
-      </article>
-      <article class="article-card" data-category="choghadiya">
-        <a href="/chaturdashi-kab-hai-june-ke-mahine-mein" class="article-thumb-link" aria-label="Chaturdashi Kab Hai June Ke Mahine Mein 2026 शिव पूजा और व्रत के लिए शुभ दिन कौन सा है?">
-          <img src="/uploads/posts/6a27803911060.webp" alt="Chaturdashi Kab Hai June Ke Mahine Mein 2026 शिव पूजा और व्रत के लिए शुभ दिन कौन सा है?" class="article-thumb" loading="lazy" decoding="async" width="400" height="225">
-        </a>
-        <div class="article-body">
-          <span class="category-badge"></span>
-          <h3 class="article-title">
-            <a href="/chaturdashi-kab-hai-june-ke-mahine-mein">Chaturdashi Kab Hai June Ke Mahine Mein 2026 शिव पूजा और व्रत के लिए शुभ दिन कौन सा है?</a>
-          </h3>
-          <p class="article-excerpt">Chaturdashi Kab Hai June Ke Mahine Mein 2026: जानें जून 2026 में कृष्ण पक्ष और शुक्ल पक्ष की चतुर्दशी तिथियां, मासिक शिवरात्रि, पूजा-व्रत का...</p>
-          <div class="article-footer">
-            <span class="article-meta">Shiv Kumar Pandit · Nov 5, 2026</span>
-            <a href="/chaturdashi-kab-hai-june-ke-mahine-mein" class="read-more-link" aria-label="Chaturdashi Kab Hai June Ke Mahine Mein 2026 शिव पूजा और व्रत के लिए शुभ दिन कौन सा है? पढ़ें">पूरा पढ़ें →</a>
-          </div>
-        </div>
-      </article>
-      <article class="article-card" data-category="choghadiya">
-        <a href="/ghar-mein-mandir-sthapna-ka-shubh-muhurt" class="article-thumb-link" aria-label="Ghar Mein Mandir Sthapna Ka Shubh Muhurt और पूजा के सही नियम">
-          <img src="/uploads/posts/6a0d44af368ff.webp" alt="Ghar Mein Mandir Sthapna Ka Shubh Muhurt और पूजा के सही नियम" class="article-thumb" loading="lazy" decoding="async" width="400" height="225">
-        </a>
-        <div class="article-body">
-          <span class="category-badge"></span>
-          <h3 class="article-title">
-            <a href="/ghar-mein-mandir-sthapna-ka-shubh-muhurt">Ghar Mein Mandir Sthapna Ka Shubh Muhurt और पूजा के सही नियम</a>
-          </h3>
-          <p class="article-excerpt">Ghar Mein Mandir Sthapna Ka Shubh Muhurt, सही दिशा, पूजा के नियम और पंचांग आधारित जानकारी। परंपरागत मान्यताओं पर आधारित सरल मार्गदर्शन।</p>
-          <div class="article-footer">
-            <span class="article-meta">Shiv Kumar Pandit · Nov 5, 2026</span>
-            <a href="/ghar-mein-mandir-sthapna-ka-shubh-muhurt" class="read-more-link" aria-label="Ghar Mein Mandir Sthapna Ka Shubh Muhurt और पूजा के सही नियम पढ़ें">पूरा पढ़ें →</a>
-          </div>
-        </div>
-      </article>
-      <article class="article-card" data-category="choghadiya">
-        <a href="/meethi-gyaras-kab-ki-hai-2026" class="article-thumb-link" aria-label="Meethi Gyaras Kab Ki Hai 2026 इस वर्ष ग्यारस का व्रत किस दिन रखा जाएगा?">
-          <img src="/uploads/posts/6a277b9d5254a.webp" alt="Meethi Gyaras Kab Ki Hai 2026 इस वर्ष ग्यारस का व्रत किस दिन रखा जाएगा?" class="article-thumb" loading="lazy" decoding="async" width="400" height="225">
-        </a>
-        <div class="article-body">
-          <span class="category-badge"></span>
-          <h3 class="article-title">
-            <a href="/meethi-gyaras-kab-ki-hai-2026">Meethi Gyaras Kab Ki Hai 2026 इस वर्ष ग्यारस का व्रत किस दिन रखा जाएगा?</a>
-          </h3>
-          <p class="article-excerpt">Meethi Gyaras Kab Ki Hai 2026: जानें वर्ष 2026 में मीठी ग्यारस (एकादशी) कब मनाई जाएगी, इसकी तिथि, व्रत का महत्व, पूजा विधि, पारण समय और भगवा...</p>
-          <div class="article-footer">
-            <span class="article-meta">Shiv Kumar Pandit · Nov 5, 2026</span>
-            <a href="/meethi-gyaras-kab-ki-hai-2026" class="read-more-link" aria-label="Meethi Gyaras Kab Ki Hai 2026 इस वर्ष ग्यारस का व्रत किस दिन रखा जाएगा? पढ़ें">पूरा पढ़ें →</a>
-          </div>
-        </div>
-      </article>
-      <article class="article-card" data-category="choghadiya">
-        <a href="/sharad-purnima-kab-hai" class="article-thumb-link" aria-label="Sharad Purnima Kab Hai 2026 खीर, लक्ष्मी पूजा और कोजागरी पूर्णिमा का महत्व">
-          <img src="/uploads/posts/6a277e6920fa1.webp" alt="Sharad Purnima Kab Hai 2026 खीर, लक्ष्मी पूजा और कोजागरी पूर्णिमा का महत्व" class="article-thumb" loading="lazy" decoding="async" width="400" height="225">
-        </a>
-        <div class="article-body">
-          <span class="category-badge"></span>
-          <h3 class="article-title">
-            <a href="/sharad-purnima-kab-hai">Sharad Purnima Kab Hai 2026 खीर, लक्ष्मी पूजा और कोजागरी पूर्णिमा का महत्व</a>
-          </h3>
-          <p class="article-excerpt">Sharad Purnima Kab Hai 2026: जानें वर्ष 2026 में शरद पूर्णिमा कब मनाई जाएगी, इसकी सही तिथि, चंद्रमा दर्शन, कोजागरी पूर्णिमा, लक्ष्मी पूजा, ख...</p>
-          <div class="article-footer">
-            <span class="article-meta">Shiv Kumar Pandit · Nov 5, 2026</span>
-            <a href="/sharad-purnima-kab-hai" class="read-more-link" aria-label="Sharad Purnima Kab Hai 2026 खीर, लक्ष्मी पूजा और कोजागरी पूर्णिमा का महत्व पढ़ें">पूरा पढ़ें →</a>
-          </div>
-        </div>
-      </article>
-      <article class="article-card" data-category="choghadiya">
-        <a href="/ekadashi-vrat-kab-hai-june-mein" class="article-thumb-link" aria-label="Ekadashi Vrat Kab Hai June Mein 2026 परमा एकादशी और निर्जला एकादशी कब है?">
-          <img src="/uploads/posts/6a277fa13ded5.webp" alt="Ekadashi Vrat Kab Hai June Mein 2026 परमा एकादशी और निर्जला एकादशी कब है?" class="article-thumb" loading="lazy" decoding="async" width="400" height="225">
-        </a>
-        <div class="article-body">
-          <span class="category-badge"></span>
-          <h3 class="article-title">
-            <a href="/ekadashi-vrat-kab-hai-june-mein">Ekadashi Vrat Kab Hai June Mein 2026 परमा एकादशी और निर्जला एकादशी कब है?</a>
-          </h3>
-          <p class="article-excerpt">Ekadashi Vrat Kab Hai June Mein 2026: जानें जून 2026 में परमा एकादशी 11 जून और निर्जला एकादशी 25 जून को कब मनाई जाएगी। पढ़ें एकादशी व्रत की ...</p>
-          <div class="article-footer">
-            <span class="article-meta">Shiv Kumar Pandit · Nov 5, 2026</span>
-            <a href="/ekadashi-vrat-kab-hai-june-mein" class="read-more-link" aria-label="Ekadashi Vrat Kab Hai June Mein 2026 परमा एकादशी और निर्जला एकादशी कब है? पढ़ें">पूरा पढ़ें →</a>
-          </div>
-        </div>
-      </article>
-      <article class="article-card" data-category="choghadiya">
-        <a href="/samvidhan-diwas-kab-manaya-jata-hai-aur-kyon" class="article-thumb-link" aria-label="Samvidhan Diwas Kab Manaya Jata Hai Aur Kyon वह दिन जब भारत ने अपने भविष्य की रूपरेखा स्वीकार की">
-          <img src="/uploads/posts/6a2a79c47756b.webp" alt="Samvidhan Diwas Kab Manaya Jata Hai Aur Kyon वह दिन जब भारत ने अपने भविष्य की रूपरेखा स्वीकार की" class="article-thumb" loading="lazy" decoding="async" width="400" height="225">
-        </a>
-        <div class="article-body">
-          <span class="category-badge"></span>
-          <h3 class="article-title">
-            <a href="/samvidhan-diwas-kab-manaya-jata-hai-aur-kyon">Samvidhan Diwas Kab Manaya Jata Hai Aur Kyon वह दिन जब भारत ने अपने भविष्य की रूपरेखा स्वीकार की</a>
-          </h3>
-          <p class="article-excerpt">Samvidhan Diwas Kab Manaya Jata Hai Aur Kyon जानें संविधान दिवस कब मनाया जाता है, 26 नवंबर का ऐतिहासिक महत्व क्या है, भारतीय संविधान को अपना...</p>
-          <div class="article-footer">
-            <span class="article-meta">Shiv Kumar Pandit · Nov 5, 2026</span>
-            <a href="/samvidhan-diwas-kab-manaya-jata-hai-aur-kyon" class="read-more-link" aria-label="Samvidhan Diwas Kab Manaya Jata Hai Aur Kyon वह दिन जब भारत ने अपने भविष्य की रूपरेखा स्वीकार की पढ़ें">पूरा पढ़ें →</a>
-          </div>
-        </div>
-      </article>
-      <article class="article-card" data-category="choghadiya">
-        <a href="/amla-navami-kab-hai-aur-kya-karna-chahie" class="article-thumb-link" aria-label="Amla Navami Kab Hai Aur Kya Karna Chahie 2026 इस दिन की परंपराओं को सही तरीके से कैसे निभाएं?">
-          <img src="/uploads/posts/6a2a7ba110f39.webp" alt="Amla Navami Kab Hai Aur Kya Karna Chahie 2026 इस दिन की परंपराओं को सही तरीके से कैसे निभाएं?" class="article-thumb" loading="lazy" decoding="async" width="400" height="225">
-        </a>
-        <div class="article-body">
-          <span class="category-badge"></span>
-          <h3 class="article-title">
-            <a href="/amla-navami-kab-hai-aur-kya-karna-chahie">Amla Navami Kab Hai Aur Kya Karna Chahie 2026 इस दिन की परंपराओं को सही तरीके से कैसे निभाएं?</a>
-          </h3>
-          <p class="article-excerpt">Amla Navami Kab Hai Aur Kya Karna Chahie 2026 जानें आंवला नवमी 2026 कब मनाई जाएगी, इस दिन आंवला पूजन, व्रत, दान और पारंपरिक धार्मिक कार्यों ...</p>
-          <div class="article-footer">
-            <span class="article-meta">Shiv Kumar Pandit · Nov 5, 2026</span>
-            <a href="/amla-navami-kab-hai-aur-kya-karna-chahie" class="read-more-link" aria-label="Amla Navami Kab Hai Aur Kya Karna Chahie 2026 इस दिन की परंपराओं को सही तरीके से कैसे निभाएं? पढ़ें">पूरा पढ़ें →</a>
-          </div>
-        </div>
-      </article>
-      <article class="article-card" data-category="choghadiya">
-        <a href="/makar-sankranti-kab-ki-hai-kya-tarikh-ki-2026" class="article-thumb-link" aria-label="Makar Sankranti Kab Ki Hai Kya Tarikh Ki 2026 नए सूर्य चक्र की शुरुआत का दिन कब माना जाता है?">
-          <img src="/uploads/posts/6a2a79312cdc8.webp" alt="Makar Sankranti Kab Ki Hai Kya Tarikh Ki 2026 नए सूर्य चक्र की शुरुआत का दिन कब माना जाता है?" class="article-thumb" loading="lazy" decoding="async" width="400" height="225">
-        </a>
-        <div class="article-body">
-          <span class="category-badge"></span>
-          <h3 class="article-title">
-            <a href="/makar-sankranti-kab-ki-hai-kya-tarikh-ki-2026">Makar Sankranti Kab Ki Hai Kya Tarikh Ki 2026 नए सूर्य चक्र की शुरुआत का दिन कब माना जाता है?</a>
-          </h3>
-          <p class="article-excerpt">Makar Sankranti Kab Ki Hai Kya Tarikh Ki 2026 जानें वर्ष 2026 में मकर संक्रांति किस तारीख को मनाई जाएगी, सूर्य के मकर राशि में प्रवेश का समय...</p>
-          <div class="article-footer">
-            <span class="article-meta">Shiv Kumar Pandit · Nov 5, 2026</span>
-            <a href="/makar-sankranti-kab-ki-hai-kya-tarikh-ki-2026" class="read-more-link" aria-label="Makar Sankranti Kab Ki Hai Kya Tarikh Ki 2026 नए सूर्य चक्र की शुरुआत का दिन कब माना जाता है? पढ़ें">पूरा पढ़ें →</a>
-          </div>
-        </div>
-      </article>
     </div>
 
-    <!-- Pagination -->
-    <div id="pagination-wrap" class="pagination-wrap">
-      <button class="page-btn active">1</button>
-      <button class="page-btn" onclick="window.setPage(2);">2</button>
-      <button class="page-btn next" onclick="window.setPage(2);">अगला →</button>
+    <!-- Numbered Pagination -->
+    <div id="pagination-wrap" class="pagination-wrap" style="margin-top:2.5rem; display:flex; justify-content:center; align-items:center; gap:0.5rem;">
+      <!-- Populated by main.js with 1, 2, 3... Prev, Next -->
     </div>
   </section>
 
-  <!-- Information Section -->
-  <section class="container">
-    <div class="section-card" style="text-align:center;">
-      <span style="font-size: 11px; font-weight: 800; color: var(--accent-orange); background: #FFF3EB; padding: 3px 10px; border-radius: 9999px;">
-        सनातन काल गणना व मार्गदर्शन
-      </span>
-      <h2 style="font-size:1.85rem; font-weight:800; margin-top:0.5rem; color:var(--primary-navy);">
-        Choghadiyas.in — चौघड़िया, पंचांग और शुभ मुहूर्त की प्रामाणिक जानकारी
-      </h2>
-      <p style="color:var(--text-muted); font-size:0.95rem; max-width:780px; margin:0.75rem auto 0; line-height:1.6;">
-        Choghadiyas.in भारत का अग्रणी सनातन पंचांग और मुहूर्त पोर्टल है। हमारा उद्देश्य प्राचीन वैदिक ज्योतिष की काल-गणना पद्धतियों को आधुनिक, सरल और सटीक रूप में जन-जन तक निःशुल्क पहुंचाना है।
-      </p>
-      <div class="feature-cards-grid">
-        <div class="feature-item-card">
-          <div class="feature-icon-box">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M20 12v10H4V12"/><path d="M2 7h20v5H2z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
-          </div>
-          <h3 style="font-size:1.1rem; font-weight:800; color:var(--primary-navy); margin-bottom:0.4rem;">100% Free Information</h3>
-          <p style="font-size:0.85rem; color:var(--text-muted); line-height:1.5;">सभी चौघड़िया मुहूर्त व पंचांग बिना किसी शुल्क के पूर्णतः निःशुल्क उपलब्ध हैं।</p>
-        </div>
-        <div class="feature-item-card">
-          <div class="feature-icon-box">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
-          </div>
-          <h3 style="font-size:1.1rem; font-weight:800; color:var(--primary-navy); margin-bottom:0.4rem;">Daily Panchang & Choghadiya</h3>
-          <p style="font-size:0.85rem; color:var(--text-muted); line-height:1.5;">दिन व रात के 8-8 पहर, वास्तविक सूर्योदय-सूर्यास्त आधारित गणना।</p>
-        </div>
-        <div class="feature-item-card">
-          <div class="feature-icon-box">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-          </div>
-          <h3 style="font-size:1.1rem; font-weight:800; color:var(--primary-navy); margin-bottom:0.4rem;">Auspicious Muhurat 2026</h3>
-          <p style="font-size:0.85rem; color:var(--text-muted); line-height:1.5;">विवाह, गृह प्रवेश, वाहन खरीद और व्यापार आरंभ के सर्वश्रेष्ठ मुहूर्त।</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FAQ Section -->
-  <section class="container">
-    <div class="section-card">
-      <div style="text-align:center;">
-        <span style="font-size: 11px; font-weight: 800; color: var(--accent-orange); background: #FFF3EB; padding: 3px 10px; border-radius: 9999px;">
-          सामान्य प्रश्नोत्तरी
+  <!-- Editorial Integrity & Educational Value Section -->
+  <section class="container" style="margin-top:4.5rem; margin-bottom:2rem;">
+    <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:20px; padding:2.5rem 2rem;">
+      <div style="max-width:850px; margin:0 auto; text-align:center;">
+        <span style="background:#FFF; border:1px solid #CBD5E1; color:#0A1629; font-size:11px; font-weight:700; text-transform:uppercase; padding:4px 12px; border-radius:9999px;">
+          संपादकीय प्रामाणिकता एवं उद्देश्य
         </span>
-        <h2 style="font-size:1.85rem; font-weight:800; margin-top:0.5rem; color:var(--primary-navy);">
-          चौघड़िया व पंचांग से जुड़े महत्वपूर्ण प्रश्न (FAQ)
-        </h2>
-      </div>
-      <div class="faq-list">
-        <div class="faq-item active">
-          <button class="faq-question" onclick="this.parentElement.classList.toggle('active');" aria-expanded="true">
-            <span>चौघड़िया क्या है और इसका क्या महत्व है?</span>
-            <span class="faq-icon" aria-hidden="true">+</span>
-          </button>
-          <div class="faq-answer">
-            चौघड़िया एक प्राचीन वैदिक समय-विभाजन प्रणाली है जिसके अनुसार दिन और रात को 8-8 बराबर भागों में विभाजित किया जाता है। प्रत्येक भाग लगभग 1.5 घंटे (3 घटी या चार घड़ी) का होता है। इसमें अमृत, शुभ और लाभ अत्यंत फलदायी माने जाते हैं।
+        <h3 style="font-size:1.45rem; font-weight:800; color:#0A1629; margin-top:1rem; margin-bottom:0.75rem;">
+          सनातन संस्कृति, पंचांग एवं धार्मिक परंपराओं का सरल मार्गदर्शन
+        </h3>
+        <p style="font-size:0.95rem; color:#475569; line-height:1.75; margin-bottom:1.5rem;">
+          Choghadiyas.in का मुख्य ध्येय सनातन धर्म के दैनिक नियमों, पंचांग के 5 अंगों (तिथि, वार, नक्षत्र, योग, करण), शुभ-अशुभ मुहूर्त और पूजा-पाठ की शास्त्रीय पद्धतियों को आधुनिक संदर्भ में सरलता से समझाना है। हमारे सभी लेख धर्मग्रंथों, प्रामाणिक पंचांगों और पारंपरिक गणनाओं के अध्ययन पर आधारित हैं।
+        </p>
+        <div style="display:flex; justify-content:center; flex-wrap:wrap; gap:1.5rem; font-size:0.88rem; color:#64748B;">
+          <div style="display:flex; align-items:center; gap:0.4rem;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>मूल एवं प्रामाणिक सामग्री</span>
           </div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-question" onclick="this.parentElement.classList.toggle('active');" aria-expanded="false">
-            <span>दिन और रात के चौघड़िया में कौन-से मुहूर्त सर्वश्रेष्ठ हैं?</span>
-            <span class="faq-icon" aria-hidden="true">+</span>
-          </button>
-          <div class="faq-answer">
-            अमृत, शुभ और लाभ चौघड़िया किसी भी नए और मांगलिक कार्य को शुरू करने के लिए सर्वश्रेष्ठ माने जाते हैं। चर चौघड़िया यात्रा और स्थानांतरण के लिए शुभ है।
+          <div style="display:flex; align-items:center; gap:0.4rem;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>पारदर्शी संपादकीय नीति</span>
           </div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-question" onclick="this.parentElement.classList.toggle('active');" aria-expanded="false">
-            <span>राहुकाल में क्या कार्य वर्जित हैं?</span>
-            <span class="faq-icon" aria-hidden="true">+</span>
-          </button>
-          <div class="faq-answer">
-            राहुकाल प्रत्येक दिन लगभग 90 मिनट का होता है। इस काल में नया व्यापार शुरू करना, विवाह वार्ता, गृह प्रवेश, स्वर्ण या वाहन क्रय जैसे मांगलिक कार्य वर्जित माने गए हैं।
+          <div style="display:flex; align-items:center; gap:0.4rem;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>नियमित तथ्य-सत्यापन</span>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Community Section -->
-  <section class="container">
-    <div class="community-banner">
-      <span style="font-size:11px; font-weight:800; text-transform:uppercase; color:var(--accent-orange); background:rgba(255,255,255,0.1); padding:3px 12px; border-radius:9999px;">
-        सनातन समुदाय से जुड़ें
-      </span>
-      <h2 style="font-size:2rem; font-weight:800; margin-top:0.75rem; color:#fff;">
-        Join Choghadiyas.in WhatsApp Channel & Community
-      </h2>
-      <p style="color:#CBD5E1; max-width:600px; margin:0.75rem auto 1.75rem; font-size:0.95rem;">
-        दैनिक चौघड़िया, पंचांग, एकादशी, पूर्णिमा और प्रमुख त्योहारों के शुभ मुहूर्त की सीधी सूचना अपने मोबाइल पर निःशुल्क पाएं।
-      </p>
-      <a href="https://whatsapp.com/channel/0029Vb7TUHHEquiNzOin5P0r" target="_blank" rel="noopener noreferrer" style="display:inline-block; padding:0.85rem 2.25rem; border-radius:9999px; background:linear-gradient(135deg, #25D366, #128C7E); color:#fff; font-weight:700; font-size:0.95rem; box-shadow:0 6px 20px rgba(37,211,102,0.35);">
-        WhatsApp चैनल से जुड़ें →
-      </a>
-    </div>
-  </section>
+</main>
 
-  <!-- Author Profile -->
-  <section class="container">
-    <div class="section-card author-profile-card">
-      <img src="https://choghadiyas.in/uploads/profiles/6a0a995eb34a7.webp" alt="Shiv Kumar Pandit" class="author-avatar-img" width="100" height="100" loading="lazy">
-      <div style="margin-bottom:0.5rem;">
-        <span style="font-size:10px; font-weight:800; text-transform:uppercase; color:var(--accent-orange); background:#FFF3EB; padding:2px 8px; border-radius:9999px;">
-          संस्थापक एवं ज्योतिषाचार्य
-        </span>
-      </div>
-      <h3 style="font-size:1.5rem; font-weight:800; color:var(--primary-navy);">Shiv Kumar Pandit</h3>
-      <p style="font-size:0.85rem; font-weight:600; color:var(--accent-orange); margin-top:2px;">संस्थापक एवं मुख्य ज्योतिषाचार्य</p>
-      <p style="font-size:0.88rem; color:var(--text-muted); line-height:1.6; margin-top:0.75rem;">
-        शिव कुमार पंडित Choghadiyas.in के संस्थापक, वैदिक पंचांग विशेषज्ञ और अनुभवी ज्योतिषाचार्य हैं। वे विगत 18 वर्षों से सनातन धर्म, काल गणना, शुभ मुहूर्त और वैदिक ज्योतिषीय परंपराओं पर प्रामाणिक शोध प्रस्तुत कर रहे हैं।
-      </p>
-      <div style="margin-top:1.5rem;">
-        <a href="/about" style="display:inline-block; padding:0.65rem 1.6rem; border-radius:9999px; background:var(--primary-navy); color:#fff; font-size:0.85rem; font-weight:700;">
-          View Author Profile →
-        </a>
-      </div>
-    </div>
-  </section>
-</div>
+<!-- Shared Site Footer -->
+<?php require_once __DIR__ . '/../includes/footer_responsive.php'; ?>
 
-<!-- Scripts -->
-<script src="/assets/js/choghadiya-engine.js" defer></script>
-<script src="/assets/js/articles-manifest.js" defer></script>
-<script src="/assets/js/main.js" defer></script>
-
-<!-- Global Footer -->
-<?php 
-if (file_exists(__DIR__ . '/../includes/footer.php')) {
-    require_once __DIR__ . '/../includes/footer.php';
-} elseif (file_exists(__DIR__ . '/../includes/footer_responsive.php')) {
-    require_once __DIR__ . '/../includes/footer_responsive.php';
-}
-?>
+<!-- Client-side Application Scripts -->
+<script src="/assets/js/articles-manifest.js"></script>
+<script src="/assets/js/main.js"></script>

@@ -30,7 +30,9 @@ Upload **ONLY** the following new assets and the approved homepage template. **D
 | `assets/js/choghadiya-engine.js` | `public_html/assets/js/choghadiya-engine.js` | **Upload New** | Astronomical Choghadiya & Panchang calculations |
 | `assets/js/articles-manifest.js` | `public_html/assets/js/articles-manifest.js` | **Upload New** | Content manifest indexing all published articles |
 | `assets/js/main.js` | `public_html/assets/js/main.js` | **Upload New** | Marquee slider, 30-article grid, search, FAQ script |
-| `templates/home.php` | `public_html/templates/home.php` | **Update File** | Redesigned homepage template (PHP routing setup) |
+| `templates/home.php` | `public_html/templates/home.php` | **Update File** | Redesigned homepage template (PHP routing setup, genuine articles) |
+| `includes/header.php` | `public_html/includes/header.php` | **Update File** | Header suppression guard (`$hide_default_header`) to remove duplicate yellow header on homepage |
+| `includes/header_responsive.php` | `public_html/includes/header_responsive.php` | **Update File** | Header suppression guard (`$hide_default_header`) to remove duplicate yellow header on homepage |
 | `index.html` (Optional) | `public_html/index.html` | **Upload/Replace** | For pure static HTML setups (if not using PHP router) |
 
 ---

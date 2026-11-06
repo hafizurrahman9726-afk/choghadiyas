@@ -668,7 +668,27 @@ export const ARTICLES: Article[] = [
   }
 ];
 
-export const ARTICLES_DATA: Article[] = ARTICLES;
+const CATEGORY_NAMES: Record<string, string> = {
+  choghadiya: 'आज का चौघड़िया',
+  muhurat: 'शुभ मुहूर्त 2026',
+  vrat: 'व्रत और त्योहार',
+  puja: 'पूजा विधि व सामग्री',
+  panchang: 'दैनिक पंचांग',
+};
+
+export const ARTICLES_DATA: Article[] = ARTICLES.map((article) => {
+  const category = article.category && article.category.trim() !== ''
+    ? article.category
+    : (CATEGORY_NAMES[article.categorySlug] || 'वैदिक पंचांग');
+  const featuredImage = article.featuredImage.startsWith('http')
+    ? article.featuredImage
+    : `https://choghadiyas.in${article.featuredImage}`;
+  return {
+    ...article,
+    category,
+    featuredImage,
+  };
+});
 
 export const AUTHOR_SHIV_KUMAR = {
   "name": "Shiv Kumar Pandit",
