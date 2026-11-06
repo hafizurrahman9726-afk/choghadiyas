@@ -6,7 +6,7 @@
   var articles = window.CHOGHADIYA_ARTICLES || [];
   var currentCategory = 'all';
   var currentPage = 1;
-  var articlesPerPage = 12; // 12 articles per page for clean pagination
+  var articlesPerPage = 30; // 30 articles per page matching 75 articles catalog
 
   // --- 1. MOBILE DRAWER NAVIGATION ---
   window.toggleMobileDrawer = function (forceState) {

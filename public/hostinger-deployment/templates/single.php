@@ -310,12 +310,13 @@ require_once __DIR__ . '/../includes/header_responsive.php';
         <a href="<?php echo SITE_URL; ?>/" style="color: #64748B; text-decoration: none;">Home</a>
         <span style="color: #CBD5E1;">›</span>
         <?php if (!empty($post['category_slug'])): ?>
-        <a href="<?php echo SITE_URL; ?>/category/<?php echo htmlspecialchars($post['category_slug']); ?>" style="color: #64748B; text-decoration: none;"><?php echo htmlspecialchars($post['category_name'] ?? 'धर्म एवं पंचांग'); ?></a>
+        <a href="<?php echo SITE_URL; ?>/category/<?php echo htmlspecialchars($post['category_slug'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" style="color: #64748B; text-decoration: none;"><?php echo htmlspecialchars(html_entity_decode((string)($post['category_name'] ?? 'धर्म एवं पंचांग'), ENT_QUOTES, 'UTF-8'), ENT_QUOTES, 'UTF-8'); ?></a>
         <span style="color: #CBD5E1;">›</span>
         <?php endif; ?>
         <span style="color: #0A1629; font-weight: 600;" aria-current="page"><?php 
-            $b_title = (string)($post['title'] ?? '');
-            echo htmlspecialchars(mb_strlen($b_title, 'UTF-8') > 65 ? mb_substr($b_title, 0, 62, 'UTF-8') . '...' : $b_title); 
+            $b_raw = html_entity_decode((string)($post['title'] ?? ''), ENT_QUOTES, 'UTF-8');
+            $b_trimmed = mb_strlen($b_raw, 'UTF-8') > 65 ? mb_substr($b_raw, 0, 62, 'UTF-8') . '...' : $b_raw;
+            echo htmlspecialchars($b_trimmed, ENT_QUOTES, 'UTF-8'); 
         ?></span>
     </div>
 </nav>

@@ -40,6 +40,12 @@ $categories = db_fetch_all("SELECT * FROM categories WHERE status = 'active' ORD
     <meta name="keywords" content="<?php echo htmlspecialchars($page_keywords); ?>">
     <link rel="canonical" href="<?php echo htmlspecialchars($canonical_url); ?>">
     
+    <?php 
+    $is_staging_env = (strpos($_SERVER['REQUEST_URI'] ?? '', 'staging') !== false) || (strpos($_SERVER['SCRIPT_NAME'] ?? '', 'staging') !== false);
+    if ($is_staging_env): ?>
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+    <?php endif; ?>
+    
     <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="<?php echo htmlspecialchars($page_title); ?>">
     <meta property="og:description" content="<?php echo htmlspecialchars($page_description); ?>">
@@ -68,7 +74,13 @@ $categories = db_fetch_all("SELECT * FROM categories WHERE status = 'active' ORD
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- CSS Styles -->
-    <link rel="stylesheet" href="<?php echo SITE_URL; ?>/assets/css/style.css">
+    <link rel="stylesheet" href="<?php echo defined('SITE_URL') ? SITE_URL : ''; ?>/assets/css/style.css">
+    <?php
+    $theme_css_url = (defined('IS_STAGING_PREVIEW') && IS_STAGING_PREVIEW)
+        ? '/staging-test/assets/css/choghadiya-theme.css?v=' . time()
+        : (defined('SITE_URL') ? SITE_URL : '') . '/assets/css/choghadiya-theme.css?v=20261106_v3';
+    ?>
+    <link rel="stylesheet" href="<?php echo $theme_css_url; ?>">
     
     <!-- Google Analytics -->
     <?php if ($site_settings['analytics_code']): ?>
@@ -149,8 +161,7 @@ $categories = db_fetch_all("SELECT * FROM categories WHERE status = 'active' ORD
 
 </head>
 <body>
-<?php if (empty($GLOBALS['hide_default_header']) && empty($hide_default_header)): ?>
-        <!-- Site-wide Unified Premium White Header (Clean White Background, 4 Real Categories) -->
+    <!-- Site-wide Unified Premium White Header (Clean White Background, 4 Real Categories) -->
     <header class="site-header" id="premiumHeader">
         <div class="header-container">
             <a href="/" class="brand-logo" aria-label="Choghadiyas.in होमपेज">
@@ -182,11 +193,11 @@ $categories = db_fetch_all("SELECT * FROM categories WHERE status = 'active' ORD
 
             <!-- Search & Mobile Menu Button -->
             <div class="header-actions">
-                <a href="/search" class="search-toggle-btn" aria-label="सर्च करें" title="खोजें">
+                <button type="button" class="search-toggle-btn" onclick="if(window.openSearchModal){window.openSearchModal();}else{window.location.href='/search';}" aria-label="सर्च करें" title="खोजें">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
                     </svg>
-                </a>
+                </button>
                 <button class="mobile-menu-btn" id="mobileMenuToggle" onclick="window.toggleMobileDrawer();" aria-label="मेनू खोलें" aria-expanded="false">
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/>
@@ -196,6 +207,25 @@ $categories = db_fetch_all("SELECT * FROM categories WHERE status = 'active' ORD
         </div>
     </header>
 
+    <!-- Instant Search Modal -->
+    <div class="search-modal-overlay" id="searchModal" onclick="if(event.target===this)window.closeSearchModal();" role="dialog" aria-modal="true" aria-label="सर्च मोडल">
+        <div class="search-modal-container">
+            <div class="search-modal-header">
+                <div class="search-modal-input-wrap">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF7000" stroke-width="2.5" aria-hidden="true">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.3-4.3"></path>
+                    </svg>
+                    <input type="text" id="modalSearchInput" placeholder="लेख, व्रत या पूजा विधि खोजें (उदा. छठ पूजा, कलश स्थापना)..." oninput="if(window.handleModalSearchInput)window.handleModalSearchInput(this.value);" autocomplete="off" aria-label="सर्च इनपुट">
+                </div>
+                <button type="button" class="search-modal-close" onclick="window.closeSearchModal();" aria-label="सर्च बंद करें">✕</button>
+            </div>
+            <div class="search-modal-results" id="modalSearchResults">
+                <div style="text-align:center; padding:2rem; color:#94A3B8; font-size:0.95rem;">खोजने के लिए शब्द टाइप करें... (उदा. छठ पूजा, कलश, मुहूर्त)</div>
+            </div>
+        </div>
+    </div>
+
     <!-- Mobile Navigation Drawer -->
     <div class="mobile-drawer-overlay" id="mobileDrawerOverlay" onclick="window.toggleMobileDrawer(false);"></div>
     <aside class="mobile-drawer" id="mobileDrawer" aria-label="मोबाइल नेविगेशन">
@@ -204,7 +234,7 @@ $categories = db_fetch_all("SELECT * FROM categories WHERE status = 'active' ORD
             <button class="drawer-close-btn" onclick="window.toggleMobileDrawer(false);" aria-label="मेनू बंद करें">✕</button>
         </div>
         <div class="mobile-drawer-search">
-            <form action="/search" method="GET">
+            <form action="/search" method="GET" onsubmit="window.handleSearchSubmit(event);">
                 <input type="text" name="q" placeholder="खोजें (e.g. व्रत, मुहूर्त, पूजा)..." aria-label="मोबाइल खोज">
                 <button type="submit" aria-label="खोजें">→</button>
             </form>
