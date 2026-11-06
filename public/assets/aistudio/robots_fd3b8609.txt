@@ -1,0 +1,21 @@
+User-agent: *
+Allow: /
+
+Disallow: /admin/
+Disallow: /includes/
+Disallow: /config/
+Disallow: /database/
+
+Disallow: /*.sql$
+Disallow: /*.log$
+
+Disallow: /?s=
+Disallow: /search/
+
+User-agent: Mediapartners-Google
+Allow: /
+
+User-agent: AdsBot-Google
+Allow: /
+
+Sitemap: https://choghadiyas.in/sitemap.xml

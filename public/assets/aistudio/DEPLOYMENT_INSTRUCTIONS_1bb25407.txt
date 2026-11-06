@@ -1,0 +1,102 @@
+===================================
+CHOGHADIYA WEBSITE DEPLOYMENT GUIDE
+===================================
+Website: https://choghadiyas.in/
+
+CRITICAL: DATABASE CONFIGURATION REQUIRED
+=======================================
+
+The website is showing 404 errors because the database is not configured.
+You MUST update the database credentials in config/database.php
+
+STEPS TO FIX 404 ERRORS:
+=========================
+
+1. UPDATE DATABASE CREDENTIALS
+   ============================
+   File: config/database.php
+   
+   Update these lines with your cPanel database credentials:
+   
+   define('DB_HOST', 'localhost');
+   define('DB_USER', 'YOUR_CPANEL_DB_USERNAME');  // CHANGE THIS
+   define('DB_PASS', 'YOUR_CPANEL_DB_PASSWORD');  // CHANGE THIS
+   define('DB_NAME', 'YOUR_CPANEL_DB_NAME');      // CHANGE THIS
+   
+   HOW TO GET CREDENTIALS:
+   - Login to cPanel
+   - Go to "MySQL Databases"
+   - Create a new database or use existing one
+   - Create a database user with password
+   - Add user to database with ALL PRIVILEGES
+   - Copy the database name, username, and password
+   - Update config/database.php with these values
+
+2. IMPORT DATABASE SCHEMA
+   =========================
+   File: database/schema.sql
+   
+   - Login to cPanel > phpMyAdmin
+   - Select your database
+   - Click "Import" tab
+   - Upload database/schema.sql file
+   - Click "Go" to import
+
+3. VERIFY .HTACCESS FILE
+   =======================
+   The .htaccess file has been fixed to work with PHP routing.
+   Ensure the following lines are present:
+   
+   ErrorDocument 404 /index.php
+   
+   The admin/includes directories are now accessible.
+
+4. TEST WEBSITE
+   ==============
+   After updating database credentials:
+   - Clear browser cache
+   - Visit https://choghadiyas.in/
+   - Homepage should load
+   - Test all menu links
+   - Test admin panel: https://choghadiyas.in/admin/
+
+ROUTING SYSTEM FIXED:
+====================
+- Removed conflicting .htaccess rewrite rules
+- Unblocked admin/includes directories
+- Set ErrorDocument to index.php for PHP routing
+- Made database check graceful
+
+ADMIN PANEL ACCESS:
+==================
+URL: https://choghadiyas.in/admin/
+Default login credentials need to be set in database.
+
+TROUBLESHOOTING:
+================
+If still seeing 404 errors:
+
+1. Check database credentials are correct
+2. Verify database tables exist (should have categories, posts, users, etc.)
+3. Check PHP error logs in cPanel
+4. Verify .htaccess is uploaded correctly
+5. Check file permissions (should be 644 for files, 755 for directories)
+
+SUPPORT:
+========
+If you need help, check:
+- cPanel error logs
+- Browser console for JavaScript errors
+- Network tab for failed requests
+
+===================================
+DEPLOYMENT CHECKLIST
+===================================
+[ ] Database credentials updated in config/database.php
+[ ] Database schema imported via phpMyAdmin
+[ ] .htaccess file uploaded to root directory
+[ ] File permissions set correctly
+[ ] Homepage loads without errors
+[ ] Menu links work
+[ ] Admin panel accessible
+[ ] All page types load (categories, posts, tools)

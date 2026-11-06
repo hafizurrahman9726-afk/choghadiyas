@@ -1,0 +1,6 @@
+{
+  "name": "Choghadiyas.in - आज का चौघड़िया, पंचांग और शुभ मुहूर्त",
+  "description": "आज का चौघड़िया, दैनिक पंचांग, शुभ मुहूर्त, राहुकाल और हिंदू व्रत-त्योहार की संपूर्ण और सटीक जानकारी हिंदी में।",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
